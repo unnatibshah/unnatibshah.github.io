@@ -28,7 +28,7 @@ button{font:inherit;color:inherit}
 ::selection{background:var(--acc);color:#070a0f}
 :focus-visible{outline:1px solid var(--acc-ink);outline-offset:3px}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
-@media (max-width:640px){[data-ticker]{flex-direction:column}}
+[data-tok]{cursor:default}[data-tok]>span{padding:2px 1px;border-radius:3px;transition:background-color .25s}[data-tok]:hover>span:nth-child(odd){background:color-mix(in oklab,var(--acc) 34%,transparent)!important}[data-tok]:hover>span:nth-child(even){background:color-mix(in oklab,var(--acc2) 34%,transparent)!important}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </helmet>
@@ -159,10 +159,12 @@ button{font:inherit;color:inherit}
     </div>
   </header>
 
-  <div aria-hidden="true" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:color-mix(in oklab,var(--bg) 55%,transparent)">
-    <div data-ticker="1" style="max-width:1280px;margin:0 auto;padding:18px clamp(20px,4vw,48px);display:flex;gap:6px 10px;font-family:'Space Mono',monospace;font-size:13px;line-height:1.4;white-space:nowrap">
-      <span style="color:var(--mute)">unnati specializes in</span><span ref="{{ marqRef }}" style="display:inline-flex;align-items:center;min-width:0"><span style="color:var(--ink)"></span><span style="color:var(--faint)"></span><span style="margin-left:10px;padding:1px 6px;border:1px solid var(--line2);border-radius:4px;font-size:10px;color:var(--faint);opacity:0;transition:opacity .25s">Tab ⇥</span></span>
+  <div style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:color-mix(in oklab,var(--bg) 55%,transparent)">
+    <div aria-hidden="true" style="max-width:1280px;margin:0 auto;padding:20px clamp(20px,4vw,48px);display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--faint)">tokenized · 6 skills · 20 tokens</span>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 22px;font-size:17px;line-height:1.5;white-space:pre;color:var(--ink)"><span data-tok="1" title="4 tokens"><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)">multi</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">-agent</span><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)"> orchestr</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">ation</span></span><span data-tok="1" title="2 tokens"><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)">Graph</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">RAG</span></span><span data-tok="1" title="3 tokens"><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)">Model</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)"> Context</span><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)"> Protocol</span></span><span data-tok="1" title="2 tokens"><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">LLM</span><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)"> evaluation</span></span><span data-tok="1" title="3 tokens"><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">Text</span><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)">-to</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">-SQL</span></span><span data-tok="1" title="6 tokens"><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)">QL</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">o</span><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)">RA</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)"> fine</span><span style="background:color-mix(in oklab,var(--acc) 15%,transparent)">-t</span><span style="background:color-mix(in oklab,var(--acc2) 15%,transparent)">uning</span></span></div>
     </div>
+  </div>
   </div>
 
   <section id="sec-work" aria-labelledby="h-work" style="max-width:1280px;margin:0 auto;padding:clamp(72px,12vh,140px) clamp(20px,4vw,48px) clamp(48px,8vh,96px)">
@@ -751,7 +753,6 @@ button{font:inherit;color:inherit}
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#ff7a90&quot;,&quot;options&quot;:[&quot;#5ce1c6&quot;,&quot;#ffb86b&quot;,&quot;#8fb4ff&quot;,&quot;#ff7a90&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;calm&quot;,&quot;off&quot;],&quot;tsType&quot;:&quot;'full'|'calm'|'off'&quot;},&quot;background&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;code&quot;,&quot;options&quot;:[&quot;code&quot;,&quot;lattice&quot;,&quot;embedding&quot;],&quot;tsType&quot;:&quot;'code'|'lattice'|'embedding'&quot;},&quot;intro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 // {{ bindings }} render inside <span class="sc-interp">; animations need the raw text node.
 const textOf = el => document.createTreeWalker(el, NodeFilter.SHOW_TEXT).nextNode();
-const TICKER = ['multi-agent orchestration', 'GraphRAG', 'Model Context Protocol', 'LLM evaluation', 'Text-to-SQL', 'fine-tuning with QLoRA'];
 const PROJECTS = [
   { slug:'multi-agent-routing', title:'Stateful multi-agent intent routing', org:'Johnson & Johnson', years:'2025–Present', kind:'hub',
     stack:['A2A','LangGraph','Model Context Protocol'],
@@ -1245,12 +1246,7 @@ class Component extends DCLogic {
     document.querySelectorAll('#sec-top [data-w]').forEach((el,i)=> el.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:800, delay:(full?650:120)+i*(full?40:15), easing:'cubic-bezier(.2,.7,.1,1)', fill:'backwards'}));
     document.querySelectorAll('nav [data-scr]').forEach(el=>this.scramble(el, el.textContent, 900, 200));
   }
-  startMarquee(){ this.startGhost(); const el = this.marqRef.current; clearTimeout(this.marqT); if (!el) return; const [txt, ghost, hint] = el.children;
-    if (this.motion()==='off'){ txt.textContent = TICKER.join(' · '); return; }
-    let i = 0; const wait = (ms, f) => { if (el.isConnected) this.marqT = setTimeout(f, ms); };
-    const suggest = () => { const w = TICKER[i++ % TICKER.length]; ghost.textContent = w; hint.style.opacity = 1; ghost.animate([{opacity:0},{opacity:1}],{duration:300}); wait(1300, () => { txt.textContent = w; ghost.textContent = ''; hint.style.opacity = 0; wait(2200, erase); }); };
-    const erase = () => { const t = txt.textContent; if (!t) return wait(250, suggest); txt.textContent = t.slice(0, -1); wait(22, erase); };
-    txt.textContent = ''; ghost.textContent = ''; suggest(); }
+  startMarquee(){ this.startGhost(); }
   typeCode(again){
     const el = this.codeRef.current; if (!el) return; clearTimeout(this.typeT);
     const html = n => { let out='', left=n; for (let li=0; li<CODE.length; li++){ for (const [k,txt] of CODE[li]){ if (left<=0) break; const part = txt.slice(0,left); left -= part.length; out += `<span style="color:${CODE_COLORS[k]}">${esc(part)}</span>`; } if (left<=0) break; if (li<CODE.length-1){ out += '\n'; left -= 1; } } return out; };
