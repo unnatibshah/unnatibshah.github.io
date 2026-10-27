@@ -21,8 +21,9 @@ export default {
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: { Authorization: `Bearer ${env.GROQ_API_KEY}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: env.MODEL, max_tokens: 1000, reasoning_effort: 'low', messages: [{ role: 'system', content: SYSTEM }, ...messages] }),
+      body: JSON.stringify({ model: env.MODEL, max_tokens: 400, reasoning_effort: 'low', messages: [{ role: 'system', content: SYSTEM }, ...messages] }),
     });
+    if (r.status === 429) return json({ error: 'rate_limited' }, 429); // Groq free tier: 8K tokens/min
     if (!r.ok) { console.log('groq', r.status, await r.text()); return json({ error: 'upstream' }, 502); }
     const text = (await r.json()).choices?.[0]?.message?.content;
     return text ? json({ text }) : json({ error: 'empty' }, 502);
