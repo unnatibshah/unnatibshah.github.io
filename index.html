@@ -15,8 +15,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>try{var t=localStorage.getItem('us-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}</script>
 <style>
-:root{--bg:#1a1d22;--bg2:#23272d;--card:rgba(36,40,47,.72);--ink:#e9edf0;--mute:#9aa4ae;--faint:#5b6570;--line:rgba(233,237,240,.08);--line2:rgba(233,237,240,.18);--grid:rgba(233,237,240,.035);--acc:#5ce1c6;--acc-ink:var(--acc);--acc2:#a395ff;--n-line:150,170,195;--n-acc:92,225,198;--n-acc2:163,149,255;--n-a:1;--n-ink:233,237,240;color-scheme:dark}
-:root[data-theme=light]{--bg:#f3f0e8;--bg2:#ebe7dc;--card:rgba(250,248,243,.78);--ink:#16181c;--mute:#55585e;--faint:#9a9ca0;--line:rgba(22,24,28,.09);--line2:rgba(22,24,28,.22);--grid:rgba(22,24,28,.05);--acc-ink:color-mix(in oklab,var(--acc) 55%,#000);--acc2:#5b4bc4;--n-line:40,44,52;--n-acc2:91,75,196;--n-a:.7;--n-ink:22,24,28;color-scheme:light}
+:root{--bg:#1a1d22;--bg2:#23272d;--card:rgba(36,40,47,.72);--ink:#e9edf0;--mute:#9aa4ae;--faint:#5b6570;--line:rgba(233,237,240,.08);--line2:rgba(233,237,240,.18);--grid:rgba(233,237,240,.035);--acc:#5ce1c6;--acc-ink:var(--acc);--acc2:#a395ff;--n-line:150,170,195;--n-acc:92,225,198;--n-acc2:163,149,255;--n-a:1;--n-ink:233,237,240;--n-bg:35,39,45;color-scheme:dark}
+:root[data-theme=light]{--bg:#f3f0e8;--bg2:#ebe7dc;--card:rgba(250,248,243,.78);--ink:#16181c;--mute:#55585e;--faint:#9a9ca0;--line:rgba(22,24,28,.09);--line2:rgba(22,24,28,.22);--grid:rgba(22,24,28,.05);--acc-ink:color-mix(in oklab,var(--acc) 55%,#000);--acc2:#5b4bc4;--n-line:40,44,52;--n-acc2:91,75,196;--n-a:.7;--n-ink:22,24,28;--n-bg:250,248,243;color-scheme:light}
 html{scroll-padding-top:88px}
 body{margin:0;background-color:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;transition:background-color .45s ease,color .45s ease}
 :root[data-vt] *,:root[data-vt] body{transition:none!important}
@@ -78,40 +78,43 @@ button{font:inherit;color:inherit}
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <main id="home">
 
-  <header id="sec-top" style="position:relative;z-index:0;max-width:1280px;margin:0 auto;min-height:max(620px,calc(100svh - 72px));box-sizing:border-box;padding:clamp(24px,4vh,48px) clamp(20px,4vw,48px) clamp(32px,6vh,64px);display:flex;flex-direction:column;justify-content:space-between;gap:32px">
-    <canvas ref="{{ nameRef }}" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;z-index:-1"></canvas>
-    <p data-hero-top="1" style="margin:0;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;color:var(--mute);display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+  <header id="sec-top" style="position:relative;z-index:0;max-width:1280px;margin:0 auto;padding:clamp(48px,9vh,112px) clamp(20px,4vw,48px) clamp(40px,6vh,72px)">
+    <div aria-hidden="true" style="display:{{ ghostShow }};position:absolute;z-index:-1;top:24px;right:clamp(20px,4vw,48px);width:min(40%,520px);height:min(78vh,640px);overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(transparent,#000 22%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 22%,#000 70%,transparent)">
+      <pre ref="{{ ghostRef }}" style="margin:0;font-family:'Space Mono',monospace;font-size:12px;line-height:2;color:var(--ink);opacity:.11;white-space:pre"></pre>
+      <div aria-hidden="true" style="position:absolute;inset:0;-webkit-mask-image:linear-gradient(transparent 44%,#000 47%,#000 53%,transparent 56%);mask-image:linear-gradient(transparent 24%,#000 27%,#000 33%,transparent 36%)"><pre ref="{{ ghostHiRef }}" style="margin:0;font-family:'Space Mono',monospace;font-size:12px;line-height:2;color:var(--acc-ink);opacity:.4;white-space:pre"></pre></div>
+      <span aria-hidden="true" style="position:absolute;left:0;right:0;top:30%;height:1px;background:linear-gradient(90deg,var(--acc-ink),transparent);opacity:.25"></span>
+    </div>
+    <p style="margin:0 0 24px;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;color:var(--mute);display:flex;gap:10px;flex-wrap:wrap;align-items:center">
       <span data-w="1" style="color:var(--acc-ink)">~/unnati</span><span data-w="1" style="color:var(--faint)">$</span><span data-w="1">ai engineer @ johnson &amp; johnson</span><span ref="{{ caretRef }}" aria-hidden="true" style="width:8px;height:14px;background:var(--acc-ink);display:inline-block"></span>
     </p>
-    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0">Unnati Shah</h1>
-    <div data-hero-bottom="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px 64px;align-items:end">
-      <div style="max-width:38rem"><p style="margin:0;font-size:clamp(24px,2.5vw,34px);line-height:1.2;letter-spacing:-.02em;text-wrap:pretty">
-          <span data-w="1">I</span> <span data-w="1">build</span> <span data-w="1">the</span> <span data-w="1" style="color:var(--acc-ink)">orchestration,</span> <span data-w="1" style="color:var(--acc-ink)">retrieval,</span> <span data-w="1">and</span> <span data-w="1" style="color:var(--acc2)">evaluation</span> <span data-w="1">layers</span> <span data-w="1">behind</span> <span data-w="1">production</span> <span data-w="1">LLM</span> <span data-w="1">systems.</span>
-        </p></div>
-      <div style="display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+    <h1 aria-label="Unnati Shah" onMouseOver="{{ nameHover }}" onMouseEnter="{{ peekOn }}" onMouseLeave="{{ peekOff }}" style="margin:0;font-weight:500;font-size:clamp(64px,12.5vw,188px);line-height:.86;letter-spacing:-.06em;display:flex;flex-wrap:wrap;column-gap:.2em;cursor:default">
+      <span aria-hidden="true" style="display:inline-flex"><span data-k="U" style="display:inline-block;text-align:center">U</span><span data-k="n" style="display:inline-block;text-align:center">n</span><span data-k="n" style="display:inline-block;text-align:center">n</span><span data-k="a" style="display:inline-block;text-align:center">a</span><span data-k="t" style="display:inline-block;text-align:center">t</span><span data-k="i" style="display:inline-block;text-align:center">i</span></span>
+      <span aria-hidden="true" style="display:inline-flex"><span data-k="S" style="display:inline-block;text-align:center">S</span><span data-k="h" style="display:inline-block;text-align:center">h</span><span data-k="a" style="display:inline-block;text-align:center">a</span><span data-k="h" style="display:inline-block;text-align:center">h</span><span data-k="." style="display:inline-block;text-align:center;color:var(--acc-ink)">.</span></span>
+    </h1>
+
+    <div style="margin-top:clamp(40px,7vh,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(40px,5vw,80px);align-items:start">
+      <div ref="{{ termWrap }}" style="position:relative;display:flex;flex-direction:column;gap:28px;max-width:36rem">
+        <div role="tooltip" aria-hidden="{{ termHidden }}" style="position:absolute;z-index:5;left:{{ termX }};top:{{ termY }};width:min(320px,90vw);padding:14px 16px;border:1px solid var(--line2);border-radius:10px;background:var(--bg2);box-shadow:0 18px 40px -16px rgba(0,0,0,.45);display:flex;flex-direction:column;gap:8px;opacity:{{ termOp }};transform:translateY({{ termShift }});pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.3,.9,.2,1)">
+          <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc-ink)">{{ termCard.tag }}</span>
+          <span style="font-size:14px;line-height:1.5;color:var(--ink)">{{ termCard.text }}</span>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--mute)">click → {{ termCard.cta }}</span>
+        </div>
+        <p style="margin:0;font-size:clamp(24px,2.5vw,34px);line-height:1.2;letter-spacing:-.02em;text-wrap:pretty">
+          <span data-w="1">I</span> <span data-w="1">build</span> <span data-w="1">the</span> <span data-w="1" role="button" tabIndex="0" data-term="orch" onMouseEnter="{{ termOn }}" onFocus="{{ termOn }}" onMouseLeave="{{ termOff }}" onBlur="{{ termOff }}" onClick="{{ termGo }}" onKeyDown="{{ termKey }}" style="color:var(--acc-ink);cursor:pointer;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size .3s" style-hover="background-size:100% 2px">orchestration</span><span data-w="1">,</span> <span data-w="1" role="button" tabIndex="0" data-term="retr" onMouseEnter="{{ termOn }}" onFocus="{{ termOn }}" onMouseLeave="{{ termOff }}" onBlur="{{ termOff }}" onClick="{{ termGo }}" onKeyDown="{{ termKey }}" style="color:var(--acc-ink);cursor:pointer;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size .3s" style-hover="background-size:100% 2px">retrieval</span><span data-w="1">,</span> <span data-w="1">and</span> <span data-w="1" role="button" tabIndex="0" data-term="eval" onMouseEnter="{{ termOn }}" onFocus="{{ termOn }}" onMouseLeave="{{ termOff }}" onBlur="{{ termOff }}" onClick="{{ termGo }}" onKeyDown="{{ termKey }}" style="color:var(--acc2);cursor:pointer;background:linear-gradient(currentColor,currentColor) 0 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size .3s" style-hover="background-size:100% 2px">evaluation</span> <span data-w="1">layers</span> <span data-w="1">behind</span> <span data-w="1">production</span> <span data-w="1">LLM</span> <span data-w="1">systems.</span>
+        </p>
+        <div data-w="1" style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)">// currently</span>
+          <p style="margin:0;font-size:17px;line-height:1.75;color:var(--mute);text-wrap:pretty">Architecting <code style="font-family:'Space Mono',monospace;font-size:.86em;color:var(--ink);background:color-mix(in oklab,var(--acc) 10%,transparent);border:1px solid color-mix(in oklab,var(--acc) 25%,transparent);border-radius:4px;padding:1px 6px">multi-agent systems</code> at Johnson &amp; Johnson. Before that, <code style="font-family:'Space Mono',monospace;font-size:.86em;color:var(--ink);background:color-mix(in oklab,var(--acc) 10%,transparent);border:1px solid color-mix(in oklab,var(--acc) 25%,transparent);border-radius:4px;padding:1px 6px">Text-to-SQL</code> at C3.ai and machine learning research at USC, published in the <code style="font-family:'Space Mono',monospace;font-size:.86em;color:var(--ink);background:color-mix(in oklab,var(--acc) 10%,transparent);border:1px solid color-mix(in oklab,var(--acc) 25%,transparent);border-radius:4px;padding:1px 6px">Strategic Management Journal</code>.</p>
+        </div>
+        <span data-w="1" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)">↳ psst: click one of the little bots in the background. They run code.</span>
         <div data-w="1" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:15px">
           <a href="#/work" onClick="{{ goWork }}" onMouseMove="{{ magnet }}" onMouseLeave="{{ unmagnet }}" style="display:inline-flex;align-items:center;gap:10px;padding:13px 20px;background:var(--ink);color:var(--bg);border-radius:999px;transition:transform .35s cubic-bezier(.3,.9,.2,1)">See the work <span aria-hidden="true">→</span></a>
           <a href="https://github.com/unnatibshah" target="_blank" rel="noopener" onMouseMove="{{ magnet }}" onMouseLeave="{{ unmagnet }}" style="display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border:1px solid var(--line2);border-radius:999px;transition:transform .35s cubic-bezier(.3,.9,.2,1),border-color .3s" style-hover="border-color:var(--acc-ink)">GitHub ↗</a>
           <a href="assets/Unnati_Shah_Resume.pdf" target="_blank" rel="noopener" onMouseMove="{{ magnet }}" onMouseLeave="{{ unmagnet }}" style="display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border:1px solid var(--line2);border-radius:999px;transition:transform .35s cubic-bezier(.3,.9,.2,1),border-color .3s" style-hover="border-color:var(--acc-ink)">Résumé ↓</a>
         </div>
-        <span data-w="1" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)">move through the name · click to scatter it</span>
       </div>
-    </div>
-  </header>
 
-  <section id="sec-about" aria-label="About" style="position:relative;z-index:0;max-width:1280px;margin:0 auto;padding:clamp(64px,11vh,128px) clamp(20px,4vw,48px)">
-    <div aria-hidden="true" style="position:absolute;z-index:-1;top:24px;left:clamp(20px,4vw,48px);width:min(48%,560px);height:min(78vh,640px);overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(transparent,#000 22%,#000 70%,transparent);mask-image:linear-gradient(transparent,#000 22%,#000 70%,transparent)">
-      <pre ref="{{ ghostRef }}" style="margin:0;font-family:'Space Mono',monospace;font-size:12px;line-height:1.9;color:var(--ink);opacity:.075;white-space:pre"></pre>
-    </div>
-    <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px clamp(40px,5vw,80px);align-items:center">
-      <div style="display:flex;flex-direction:column;gap:24px;max-width:34rem">
-        <span data-scr="1" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc-ink)">00 // About</span>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)">// currently</span>
-          <p style="margin:0;font-size:clamp(18px,1.6vw,22px);line-height:1.7;color:var(--mute);text-wrap:pretty">Architecting <code style="font-family:'Space Mono',monospace;font-size:.86em;color:var(--ink);background:color-mix(in oklab,var(--acc) 10%,transparent);border:1px solid color-mix(in oklab,var(--acc) 25%,transparent);border-radius:4px;padding:1px 6px">multi-agent systems</code> at Johnson &amp; Johnson. Before that, <code style="font-family:'Space Mono',monospace;font-size:.86em;color:var(--ink);background:color-mix(in oklab,var(--acc) 10%,transparent);border:1px solid color-mix(in oklab,var(--acc) 25%,transparent);border-radius:4px;padding:1px 6px">Text-to-SQL</code> at C3.ai and machine learning research at USC, published in the <code style="font-family:'Space Mono',monospace;font-size:.86em;color:var(--ink);background:color-mix(in oklab,var(--acc) 10%,transparent);border:1px solid color-mix(in oklab,var(--acc) 25%,transparent);border-radius:4px;padding:1px 6px">Strategic Management Journal</code>.</p>
-        </div>
-      </div>
-      <figure data-typecode="1" style="margin:0;border:1px solid var(--line2);border-radius:12px;background:var(--card);overflow:hidden;box-shadow:0 30px 80px -40px rgba(0,0,0,.5)">
+      <figure data-w="1" style="margin:0;border:1px solid var(--line2);border-radius:12px;background:var(--card);overflow:hidden;box-shadow:0 30px 80px -40px rgba(0,0,0,.5)">
         <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-family:'Space Mono',monospace;font-size:11px;color:var(--mute)">
           <span role="tablist" aria-label="Profile view" style="display:flex;gap:4px">
             <sc-for list="{{ profTabs }}" as="tb" hint-placeholder-count="2">
@@ -151,7 +154,7 @@ button{font:inherit;color:inherit}
         </div>
       </figure>
     </div>
-  </section>
+  </header>
 
   <div aria-hidden="true" style="overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;background:color-mix(in oklab,var(--bg) 55%,transparent)">
     <div ref="{{ marqRef }}" style="display:flex;width:max-content;gap:40px;align-items:center;font-size:clamp(34px,5vw,64px);font-weight:500;letter-spacing:-.04em;line-height:1;white-space:nowrap">
@@ -624,6 +627,20 @@ button{font:inherit;color:inherit}
   <span style="position:relative;font-family:'Space Mono',monospace;font-size:15px;color:var(--ink)">↑</span>
 </button>
 
+<sc-if value="{{ hire }}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position:fixed;left:50%;bottom:clamp(16px,4vh,40px);z-index:45;transform:translateX(-50%);width:min(560px,calc(100vw - 32px));background:var(--bg2);border:1px solid color-mix(in oklab,var(--acc) 55%,transparent);border-radius:12px;box-shadow:0 24px 60px -20px rgba(0,0,0,.5);padding:16px 18px;display:flex;flex-direction:column;gap:12px;font-family:'Space Mono',monospace;font-size:12px">
+    <span style="color:var(--mute)">$ sudo hire unnati</span>
+    <span style="color:var(--acc-ink)">[sudo] permission granted. all agents dispatched.</span>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-family:'Space Grotesk',sans-serif">
+      <span style="font-size:15px;color:var(--ink)">unnatishah.ix@gmail.com</span>
+      <span style="display:flex;gap:8px">
+        <button type="button" onClick="{{ copyEmail }}" style="background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:13px">{{ copyLabel }}</button>
+        <button type="button" onClick="{{ closeHire }}" aria-label="Dismiss" style="background:none;border:1px solid var(--line2);border-radius:999px;width:34px;cursor:pointer;color:var(--mute)">×</button>
+      </span>
+    </div>
+  </div>
+</sc-if>
+
 <sc-if value="{{ agentOpen }}" hint-placeholder-val="{{ false }}">
   <div onClick="{{ closeAgent }}" style="position:fixed;inset:0;z-index:55;background:color-mix(in oklab,var(--bg) 40%,transparent)">
     <aside ref="{{ agentRef }}" role="dialog" aria-modal="true" aria-label="Ask my agent" onClick="{{ stop }}" style="position:absolute;top:12px;right:12px;bottom:12px;width:min(440px,calc(100vw - 24px));background:var(--bg2);border:1px solid var(--line2);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.5)">
@@ -727,7 +744,7 @@ button{font:inherit;color:inherit}
 
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#5ce1c6&quot;,&quot;options&quot;:[&quot;#5ce1c6&quot;,&quot;#ffb86b&quot;,&quot;#8fb4ff&quot;,&quot;#ff7a90&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;calm&quot;,&quot;off&quot;],&quot;tsType&quot;:&quot;'full'|'calm'|'off'&quot;},&quot;intro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#ff7a90&quot;,&quot;options&quot;:[&quot;#5ce1c6&quot;,&quot;#ffb86b&quot;,&quot;#8fb4ff&quot;,&quot;#ff7a90&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;calm&quot;,&quot;off&quot;],&quot;tsType&quot;:&quot;'full'|'calm'|'off'&quot;},&quot;background&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;code&quot;,&quot;options&quot;:[&quot;code&quot;,&quot;lattice&quot;,&quot;embedding&quot;],&quot;tsType&quot;:&quot;'code'|'lattice'|'embedding'&quot;},&quot;intro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 const PROJECTS = [
   { slug:'multi-agent-routing', title:'Stateful multi-agent intent routing', org:'Johnson & Johnson', years:'2025–Present', kind:'hub',
     stack:['A2A','LangGraph','Model Context Protocol'],
@@ -838,14 +855,34 @@ const BOOT = [['init','unnati.agent','v2026'],['load','router · LangGraph','ok'
 const AGENT_SUGS = ['What does Unnati build at Johnson & Johnson?','Which project best shows her evaluation work?','What was her research at USC about?','What is her experience with RAG?'];
 const AGENT_LINKS = [['multi-agent-routing',/langgraph|a2a|multi-agent|intent routing|model context/i],['graph-retrieval',/neo4j|multi-hop|graph retrieval/i],['eval-llmops',/opentelemetry|llm-as-a-judge|regression|evaluation framework/i],['enterprise-rag',/\bRAG\b|mistral|qlora|100K\+ documents/i],['text-to-sql',/text.to.sql|gbnf|c3\.ai|llama 3/i]];
 const GHOST = [
-'from langgraph.graph import StateGraph, END','from a2a import AgentCard, Task','from mcp.client import ClientSession','',
-'class RouterState(TypedDict):','    query: str','    intent: str | None','    context: list[Document]','    hops: int','',
-'def classify(state: RouterState) -> RouterState:','    intent = intent_model.predict(state["query"])','    return state | dict(intent=intent)','',
-'def retrieve(state: RouterState) -> RouterState:','    seeds = qdrant.search(embed(state["query"]), k=8)','    graph = neo4j.expand(seeds, max_hops=2)','    return state | dict(context=rerank(graph))','',
-'async def call_tools(state: RouterState):','    async with ClientSession(server) as mcp:','        result = await mcp.call_tool(state["intent"])','    return state | dict(context=[result])','',
-'graph = StateGraph(RouterState)','graph.add_node("classify", classify)','graph.add_node("retrieve", retrieve)','graph.add_node("tools", call_tools)','graph.add_conditional_edges("classify", route)','graph.add_edge("retrieve", "evaluate")','',
-'@tracer.start_as_current_span("evaluate")','def evaluate(state: RouterState) -> float:','    return judge.score(faithfulness, relevancy)','',
-'app = graph.compile(checkpointer=memory)',''].join('\n');
+'$ git log --reverse unnati/life','',
+'a1f3c09  2021  publish   IEEE I2CT · privacy in medical imaging','            federated learning + differential privacy','',
+'4be7d21  2022  mv        mumbai → los_angeles','',
+'7c02e8a  2022  checkout  ms-cs @ university-of-southern-california','',
+'9d41f6b  2022  research  71M+ reviews · 279K developer profiles','            12K+ SDKs · fuzzy matching @ 99%','',
+'e58a0c3  2023  teach     BUAD 310g applied business statistics','',
+'2f9b7e4  2024  publish   strategic management journal','',
+'b61d5a2  2024  deploy    ml engineer @ johnson-and-johnson','            RAG over 100K+ docs · mistral-7b qlora','',
+'0ac8f19  2025  feat      text-to-sql @ c3.ai','            llama 3-70b · GBNF · 94% syntax accuracy','',
+'d3e7b40  2025  merge     ai engineer @ johnson-and-johnson','            langgraph · a2a · mcp · 50K+ queries/day','',
+'f7a2c66  2026  HEAD      new-york-city · building what’s next','',''].join('\n');
+const TERMS = {
+  orch:{tag:'Orchestration', text:'Stateful multi-agent routing on LangGraph, A2A and MCP. 50K+ daily queries at 96% intent accuracy.', slug:'multi-agent-routing', cta:'Case 01'},
+  retr:{tag:'Retrieval', text:'Multi-hop graph retrieval over Neo4j and Qdrant. +20% search relevance, −33% vector lookup latency.', slug:'graph-retrieval', cta:'Case 02'},
+  eval:{tag:'Evaluation', text:'OpenTelemetry monitoring, automated regression and LLM-as-a-judge. QA cycles cut by 81%.', slug:'eval-llmops', cta:'Case 03'}
+};
+const SNIPS = [
+  ['print("Hello, World!")','Hello, World!'],['#include <stdio.h>','✓ preprocessed'],['int main(void) { return 0; }','exit 0'],
+  ['i = 0x5f3759df - ( i >> 1 );','≈ 1/√x'],['import this','Beautiful is better than ugly.'],['if __name__ == "__main__":','✓ __main__'],
+  ['def fib(n): return n if n < 2 else fib(n-1) + fib(n-2)','fib(10) → 55'],['10 PRINT "HELLO" : 20 GOTO 10','HELLO HELLO HELLO …'],
+  ['(define (square x) (* x x))','(square 12) → 144'],['SELECT * FROM world WHERE curious = TRUE;','1 row · unnati'],
+  ['attention = softmax(Q @ K.T / sqrt(d_k)) @ V','tensor(shape=[8, 512])'],['loss.backward()','∇ computed'],['optimizer.step()','weights updated'],
+  ['model.fit(X, y)','epoch 10/10 · acc 0.96'],['git commit -m "initial commit"','[main a1f3c09] initial commit'],['git push origin main','→ main ✓'],
+  [':wq','"portfolio" written'],['console.log("it works on my machine")','it works on my machine'],['while (true) { learn(); }','∞ still learning'],
+  ['docker run -it unnati/portfolio','container started'],['kubectl get pods','agents   3/3   Running'],['λx.x','identity'],['return 42;','42'],
+  ['graph.add_edge("retrieve", "evaluate")','edge added'],['agent.run("build something good")','✓ task complete'],['fork()','pid 1337'],['ping 127.0.0.1','64 bytes · 0.04 ms'],
+  ['// TODO: ship it','✓ shipped'],['assert answer == 42','passed'],['await mcp.call_tool("search")','3 results']
+];
 const SECTIONS = [['work','Work'],['projects','Projects'],['experience','Experience'],['research','Research'],['contact','Contact']];
 const SCROLL_SECTIONS = [...SECTIONS.slice(0,3), ['certifications','Certifications'], ...SECTIONS.slice(3)];
 const SKILLS = [
@@ -886,77 +923,9 @@ const CODE_COLORS = {kw:'var(--acc2)', str:'var(--acc-ink)', cm:'var(--faint)', 
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 
 class Component extends DCLogic {
-  state = { route:{name:'home'}, theme:'dark', node:null, row:-1, repo:-1, cat:'All', stage:0, openExp:0, palOpen:false, q:'', sel:0, copied:false, wide:true, active:'', scrolled:false, pub:0, page:0, rq:'', photoTab:false, peek:false, skill:null, deep:false, agentOpen:false, msgs:[], aq:'', thinking:false, trace:0, boot:(()=>{ try{ return !sessionStorage.getItem('us-boot'); }catch(e){ return false; } })(), bootN:0 };
-  bootRef = React.createRef(); ghostRef = React.createRef(); nameRef = React.createRef();
-  buildName(intro){
-    const c = this.nameRef.current; if (!c){ this.np = null; return; }
-    const r = c.getBoundingClientRect(); if (!r.width || !r.height){ this.np = null; return; }
-    const d = Math.min(devicePixelRatio||1, 2); c.width = Math.round(r.width*d); c.height = Math.round(r.height*d); this.nd = d; this.nw = r.width; this.nh = r.height;
-    const hdr = c.parentNode, top = hdr.querySelector('[data-hero-top]'), bot = hdr.querySelector('[data-hero-bottom]');
-    const y0 = top ? top.offsetTop + top.offsetHeight + 12 : 60, y1 = bot ? bot.offsetTop - 20 : r.height*.7;
-    const W = r.width, padX = parseFloat(getComputedStyle(hdr).paddingLeft) || 24;
-    const lines = W < 760 ? ['Unnati','Shah.'] : ['Unnati Shah.'];
-    const off = document.createElement('canvas'), ctx = off.getContext('2d');
-    const setF = s => { ctx.font = '500 ' + s + 'px "Space Grotesk", sans-serif'; try { ctx.letterSpacing = (-0.055*s) + 'px'; } catch(e){} };
-    setF(100); const widest = Math.max.apply(null, lines.map(l=>ctx.measureText(l).width));
-    const availW = W - padX*2, availH = Math.max(90, y1 - y0);
-    const fs = Math.min(100*availW/widest, availH/(lines.length*.9), 330);
-    off.width = Math.ceil(W); off.height = Math.ceil(availH); setF(fs); ctx.fillStyle = '#000';
-    const lh = fs*.9, startY = (availH - lh*lines.length)/2 + fs*.76;
-    lines.forEach((l,i)=>ctx.fillText(l, padX, startY + i*lh));
-    const lastLine = lines[lines.length-1], dotX = padX + ctx.measureText(lastLine.slice(0,-1)).width, dotY = startY + (lines.length-1)*lh - fs*.5;
-    const img = ctx.getImageData(0,0,off.width,off.height).data;
-    const step = Math.max(4, Math.round(fs/32)), pts = [], grid = {}, adj = [], edges = [];
-    const now = performance.now(), anim = intro && this.motion()!=='off';
-    for (let y=0; y<off.height; y+=step) for (let x=0; x<off.width; x+=step){
-      if (img[(y*off.width + x)*4 + 3] < 140) continue;
-      const hx = x + (Math.random()-.5)*step*.5, hy = y0 + y + (Math.random()-.5)*step*.5;
-      const p = {hx, hy, x:hx, y:hy, vx:0, vy:0, q:0, acc: x > dotX && y > dotY - fs*.4, sx: Math.random()*W, sy: Math.random()*r.height, delay: (hx/W)*650 + Math.random()*450};
-      if (anim){ p.x = p.sx; p.y = p.sy; }
-      grid[(x/step)+','+(y/step)] = pts.length; pts.push(p); adj.push([]);
-    }
-    const link = (i,j) => { edges.push([i,j]); adj[i].push(j); adj[j].push(i); };
-    Object.keys(grid).forEach(k=>{ const [gx,gy] = k.split(',').map(Number), i = grid[k];
-      [[1,0,.5],[0,1,.5],[1,1,.16],[1,-1,.16]].forEach(([dx,dy,pr])=>{ const j = grid[(gx+dx)+','+(gy+dy)]; if (j!=null && Math.random()<pr) link(i,j); }); });
-    this.np = {pts, edges, adj, t0: now, anim, rad: Math.max(1, step*.2), sig: [], last: 0, W, H: r.height};
-  }
-  nameShock(cx, cy){ const N = this.np, c = this.nameRef.current; if (!N || !c || this.motion()==='off') return; const r = c.getBoundingClientRect(); const x = cx - r.left, y = cy - r.top; if (y < 0 || y > r.height) return;
-    N.pts.forEach(p=>{ const dx = p.x - x, dy = p.y - y, dd = Math.hypot(dx,dy) || 1; if (dd < 340){ const f = 22*(1-dd/340); p.vx += dx/dd*f; p.vy += dy/dd*f; p.q = Math.max(p.q, 1-dd/340); } }); }
-  ensureName(){ const c = this.nameRef.current; if (!c){ this.np = null; return; } const r = c.getBoundingClientRect(); if (!r.width || !r.height) return; const d = Math.min(devicePixelRatio||1, 2); if (!this.np || c.width !== Math.round(r.width*d) || c.height !== Math.round(r.height*d)){ const first = !this.nameBuilt; this.buildName(first && !document.hidden); if (this.np) this.nameBuilt = true; } }
-  drawName(now){
-    this.ensureName();
-    const c = this.nameRef.current, N = this.np; if (!c || !N || !this.col) return;
-    const ctx = c.getContext('2d'), d = this.nd||1, col = this.col, A = col.a;
-    ctx.setTransform(d,0,0,d,0,0); ctx.clearRect(0,0,this.nw,this.nh);
-    const r = c.getBoundingClientRect(), mx = (this.mouse ? this.mouse.x : -9999) - r.left, my = (this.mouse ? this.mouse.y : -9999) - r.top, R = 120, still = this.motion()==='off';
-    let intro = false;
-    N.pts.forEach(p=>{
-      if (N.anim && !p.live){ const t = (now - N.t0 - p.delay)/1300; if (t < 1){ intro = true; const e = t<0 ? 0 : 1-Math.pow(1-t,3); p.x = p.sx + (p.hx-p.sx)*e; p.y = p.sy + (p.hy-p.sy)*e; return; } p.live = true; p.x = p.hx; p.y = p.hy; }
-      if (still) return;
-      const dx = p.x - mx, dy = p.y - my, dd = Math.hypot(dx,dy) || 1;
-      if (dd < R){ const f = (1-dd/R)*1.6; p.vx += dx/dd*f; p.vy += dy/dd*f; }
-      p.vx += (p.hx-p.x)*.06; p.vy += (p.hy-p.y)*.06; p.vx *= .82; p.vy *= .82; p.x += p.vx; p.y += p.vy; p.q *= .95;
-    });
-    ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(' + col.ink + ',' + (.22*A) + ')'; ctx.beginPath();
-    const hot = [];
-    N.edges.forEach(e=>{ const a = N.pts[e[0]], b = N.pts[e[1]]; const dm = Math.hypot((a.x+b.x)/2-mx, (a.y+b.y)/2-my); if (dm < R*1.25 || a.q > .1) { hot.push([a,b,Math.max(1-dm/(R*1.25), a.q)]); return; } ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); });
-    ctx.stroke();
-    hot.forEach(([a,b,k])=>{ ctx.strokeStyle = 'rgba(' + col.acc + ',' + ((.25+.6*k)*A) + ')'; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); });
-    ctx.fillStyle = 'rgba(' + col.ink + ',' + (.92*A) + ')'; ctx.beginPath();
-    const glow = [];
-    N.pts.forEach(p=>{ const dm = Math.hypot(p.x-mx, p.y-my); if (p.acc || dm < R || p.q > .1){ glow.push([p, Math.max(dm<R ? 1-dm/R : 0, p.q, p.acc ? .6 : 0)]); return; } ctx.moveTo(p.x + N.rad, p.y); ctx.arc(p.x, p.y, N.rad, 0, 7); });
-    ctx.fill();
-    glow.forEach(([p,k])=>{ ctx.fillStyle = 'rgba(' + col.acc + ',' + ((.55+.45*k)*A) + ')'; ctx.beginPath(); ctx.arc(p.x, p.y, N.rad*(1+k*.8), 0, 7); ctx.fill(); });
-    if (!intro && N.anim) this.nameShown = true;
-    if (still || intro) return;
-    if (now - N.last > 700 && N.sig.length < 6){ N.last = now; const i = Math.floor(Math.random()*N.pts.length); if (N.adj[i] && N.adj[i].length) N.sig.push({a:i, b:N.adj[i][0], t:0, h:9}); }
-    const next = [];
-    N.sig.forEach(s=>{ const a = N.pts[s.a], b = N.pts[s.b]; s.t += .14; const t = Math.min(1, s.t), x = a.x + (b.x-a.x)*t, y = a.y + (b.y-a.y)*t;
-      ctx.fillStyle = 'rgba(' + col.acc + ',' + (.95*A) + ')'; ctx.beginPath(); ctx.arc(x, y, N.rad*1.6, 0, 7); ctx.fill(); b.q = Math.max(b.q, .7);
-      if (s.t >= 1){ if (s.h > 0){ const nb = N.adj[s.b].filter(k=>k!==s.a); if (nb.length) next.push({a:s.b, b:nb[Math.floor(Math.random()*nb.length)], t:0, h:s.h-1}); } } else next.push(s); });
-    N.sig = next;
-  }
-  startGhost(){ const el = this.ghostRef.current; if (!el) return; if (!el.textContent) el.textContent = GHOST + '\n' + GHOST; this.ghostAnim && this.ghostAnim.cancel(); if (this.motion()==='off') return; this.ghostAnim = el.animate([{transform:'translateY(0)'},{transform:'translateY(-50%)'}],{duration: this.motion()==='calm' ? 140000 : 90000, iterations:Infinity}); } agentRef = React.createRef(); agentList = React.createRef(); agentInput = React.createRef(); agentDot = React.createRef();
+  state = { route:{name:'home'}, theme:'dark', node:null, row:-1, repo:-1, cat:'All', stage:0, openExp:0, palOpen:false, q:'', sel:0, copied:false, wide:true, active:'', scrolled:false, pub:0, page:0, rq:'', photoTab:false, peek:false, skill:null, deep:false, hire:false, term:null, termPos:[0,0], agentOpen:false, msgs:[], aq:'', thinking:false, trace:0, boot:(()=>{ try{ return !sessionStorage.getItem('us-boot'); }catch(e){ return false; } })(), bootN:0 };
+  bootRef = React.createRef(); ghostRef = React.createRef(); ghostHiRef = React.createRef(); termWrap = React.createRef();
+  startGhost(){ const els = [this.ghostRef.current, this.ghostHiRef.current].filter(Boolean); if (!els.length) return; (this.ghostAnims||[]).forEach(a=>a.cancel()); this.ghostAnims = []; els.forEach(el=>{ if (!el.textContent) el.textContent = GHOST + '\n' + GHOST; }); if (this.motion()==='off') return; const dur = this.motion()==='calm' ? 120000 : 80000; const t = document.timeline ? document.timeline.currentTime : 0; els.forEach(el=>{ const a = el.animate([{transform:'translateY(0)'},{transform:'translateY(-50%)'}],{duration:dur, iterations:Infinity}); a.startTime = t; this.ghostAnims.push(a); }); } agentRef = React.createRef(); agentList = React.createRef(); agentInput = React.createRef(); agentDot = React.createRef();
   kb(){ if (this._kb) return this._kb; const L = [];
     L.push('Unnati Shah, AI Engineer at Johnson & Johnson, based in New York City. Email unnatishah.ix@gmail.com. LinkedIn linkedin.com/in/unnati9. GitHub github.com/unnatibshah.');
     EXP.forEach(e=>L.push('ROLE: '+e.role+', '+e.org+' ('+e.dates+', '+e.place+'): '+e.points.join(' ')));
@@ -1011,44 +980,46 @@ class Component extends DCLogic {
       else if (e.key==='Escape'){ if (this.state.agentOpen) this.closeAgent(); else if (this.state.palOpen) this.closePal(); else if (this.state.route.name==='project') this.go('#/work'); }
     };
     addEventListener('keydown', this.onKey);
-    this.onResize = () => { this.setState({wide: innerWidth > 900, vw: innerWidth}); this.sizeField(); clearTimeout(this.nbT); this.nbT = setTimeout(()=>{ this.buildName(false); if (this.motion()==='off') this.drawName(performance.now()); }, 120); this.moveInd(this.state.active); };
+    this.onResize = () => { this.setState({wide: innerWidth > 900, vw: innerWidth}); this.sizeField(); this.moveInd(this.state.active); };
     addEventListener('resize', this.onResize);
     this.onScroll = () => this.scrollFx();
     addEventListener('scroll', this.onScroll, {passive:true});
-    this.onMouse = e => { this.mouse = {x:e.clientX, y:e.clientY}; };
-    this.onDown = e => { if (e.target.closest && e.target.closest('a,button,input,svg,[role=dialog]')) return; this.burst(e.clientX, e.clientY); this.nameShock(e.clientX, e.clientY); };
+    this.onMouse = e => { this.mouse = {x:e.clientX, y:e.clientY}; const C = this.code; if (C && (this.props.background ?? 'code') === 'code'){ const t = e.target; const plain = !(t.closest && t.closest('a,button,input,[role=dialog],[role=button],p,h1,h2,h3,li,dl,figure,article')); const near = plain && (C.bots.some(b=>Math.hypot(b.x - e.clientX, b.y - e.clientY) < 26) || C.lines.some(l=>e.clientX >= l.x && e.clientX <= l.x + l.w && e.clientY >= l.y - 14 && e.clientY <= l.y + 6)); const want = near ? 'pointer' : ''; if (this._cur !== want){ this._cur = want; document.documentElement.style.cursor = want; } } };
+    this.onDown = e => { if (e.target.closest && e.target.closest('a,button,input,svg,[role=dialog]')) return; this.burst(e.clientX, e.clientY); };
     addEventListener('mousemove', this.onMouse, {passive:true}); addEventListener('pointerdown', this.onDown);
-    this.onVis = () => { if (document.hidden) return; this.sizeField(); if (this.np && this.np.anim && !this.nameShown){ this.buildName(true); } this.ensureName(); this.fixLetters(); if (this.typing){ clearTimeout(this.typeT); this.typing=false; this.typeCode(true); } };
+    document.fonts && document.fonts.load && document.fonts.load('12px "Space Mono"').then(()=>{ this.code = null; }, ()=>{});
+    this.onVis = () => { if (document.hidden) return; this.sizeField(); this.fixLetters(); if (this.typing){ clearTimeout(this.typeT); this.typing=false; this.typeCode(true); } };
     document.addEventListener('visibilitychange', this.onVis);
-    if ('ResizeObserver' in window) { this.ro = new ResizeObserver(()=>{ this.sizeField(); }); this.ro.observe(document.documentElement); this.nro = new ResizeObserver(()=>{ const c = this.nameRef.current; if (c && !this.nro._t){ this.nro._t = requestAnimationFrame(()=>{ this.nro._t = 0; this.ensureName(); if (this.motion()==='off') this.drawName(performance.now()); }); } }); const hdr = document.getElementById('sec-top'); hdr && this.nro.observe(hdr); }
+    if ('ResizeObserver' in window) { this.ro = new ResizeObserver(()=>{ this.sizeField(); }); this.ro.observe(document.documentElement); }
     this.isMac = /Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent);
     this.lastY = scrollY; this.vel = 0; this._ps = {...this.state};
     const skipB = this.props.intro === false || this.motion()==='off' || this.parse().name!=='home'; if (skipB && this.state.boot){ try{ sessionStorage.setItem('us-boot','1'); }catch(e){} }
     this.setState({theme, wide: innerWidth>900, vw: innerWidth, route:this.parse(), boot: this.state.boot && !skipB}, () => { this.initField(); this.state.boot ? (this.fixLetters(), this.runBoot()) : this.intro(); this.afterRoute({name:'none'}); this.scrollFx(); });
     this.loop();
   }
-  componentWillUnmount(){ ['hashchange','popstate'].forEach(t=>removeEventListener(t,this.onRoute)); removeEventListener('keydown',this.onKey); removeEventListener('resize',this.onResize); removeEventListener('scroll',this.onScroll); removeEventListener('mousemove',this.onMouse); removeEventListener('pointerdown',this.onDown); document.removeEventListener('visibilitychange',this.onVis); this.ro && this.ro.disconnect(); this.nro && this.nro.disconnect(); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); clearTimeout(this.typeT); clearInterval(this.trT); }
+  componentWillUnmount(){ ['hashchange','popstate'].forEach(t=>removeEventListener(t,this.onRoute)); removeEventListener('keydown',this.onKey); removeEventListener('resize',this.onResize); removeEventListener('scroll',this.onScroll); removeEventListener('mousemove',this.onMouse); removeEventListener('pointerdown',this.onDown); document.removeEventListener('visibilitychange',this.onVis); this.ro && this.ro.disconnect(); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); clearTimeout(this.typeT); clearInterval(this.trT); }
   componentDidUpdate(pp){
+    if (this.state.term) this.lastTerm = this.state.term;
     pp = pp || {}; const ps = this._ps || this.state; this._ps = {...this.state};
     if (!ps.agentOpen && this.state.agentOpen){ const el = this.agentRef.current; if (el && this.motion()!=='off') el.animate([{transform:'translateX(32px)',opacity:0},{transform:'none',opacity:1}],{duration:420,easing:'cubic-bezier(.2,.7,.1,1)'}); setTimeout(()=>this.agentInput.current && this.agentInput.current.focus(), 60); }
     if ((ps.msgs !== this.state.msgs || ps.thinking !== this.state.thinking) && this.agentList.current){ const l = this.agentList.current; l.scrollTo({top:l.scrollHeight, behavior:'smooth'}); }
     if (pp.accent !== this.props.accent){ this.applyAccent(); }
-    if (pp.motion !== this.props.motion){ this.loop(); }
+    if (pp.motion !== this.props.motion || pp.background !== this.props.background){ this.loop(); }
     if (!ps.palOpen && this.state.palOpen){ this.palReturn = document.activeElement; let n=0; const f=()=>{ const el=this.palInput.current; if (el){ el.focus(); if (document.activeElement===el) return; } if (++n<20) requestAnimationFrame(f); }; requestAnimationFrame(f); }
     if (ps.palOpen && !this.state.palOpen && this.palReturn && this.palReturn.focus) this.palReturn.focus();
     if (ps.openExp !== this.state.openExp && this.motion()!=='off'){ document.querySelectorAll('[data-exp] [data-pt]').forEach((el,i)=> el.animate([{opacity:0,transform:'translateX(-10px)'},{opacity:1,transform:'none'}],{duration:500,delay:i*70,easing:'cubic-bezier(.2,.7,.1,1)',fill:'backwards'})); }
     if (ps.pub !== this.state.pub && this.pubRef.current && this.motion()!=='off'){ this.pubRef.current.animate([{opacity:.2,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:500,easing:'cubic-bezier(.2,.7,.1,1)'}); this.drawPaths(this.pubRef.current, 100); }
     if ((ps.cat !== this.state.cat || ps.page !== this.state.page) && this.motion()!=='off' && this.repoGrid.current){ this.repoGrid.current.querySelectorAll('[data-repo]').forEach((el,i)=> el.animate([{opacity:0,transform:'translateY(14px) scale(.98)'},{opacity:1,transform:'none'}],{duration:550,delay:i*45,easing:'cubic-bezier(.2,.7,.1,1)',fill:'backwards'})); }
     if (ps.active !== this.state.active || ps.wide !== this.state.wide) this.moveInd(this.navHover || this.state.active);
-    if (ps.route.name !== this.state.route.name && this.state.route.name==='home'){ requestAnimationFrame(()=>{ this.typeCode(true); this.fixLetters(); this.buildName(!document.hidden); const h = document.getElementById('sec-top'); if (this.nro && h) this.nro.observe(h); }); }
+    if (ps.route.name !== this.state.route.name && this.state.route.name==='home'){ requestAnimationFrame(()=>{ this.typeCode(true); this.fixLetters(); }); }
   }
   applyAccent(){
-    const hex = this.props.accent ?? '#5ce1c6'; const root = document.documentElement;
+    const hex = this.props.accent ?? '#ff7a90'; const root = document.documentElement;
     root.style.setProperty('--acc', hex);
     const m = hex.replace('#','').match(/.{2}/g); if (m) root.style.setProperty('--n-acc', m.map(x=>parseInt(x,16)).join(','));
     this.readColors();
   }
-  readColors(){ const cs = getComputedStyle(document.documentElement); this.col = {line:cs.getPropertyValue('--n-line').trim()||'150,170,195', acc:cs.getPropertyValue('--n-acc').trim()||'92,225,198', acc2:cs.getPropertyValue('--n-acc2').trim()||'163,149,255', a:parseFloat(cs.getPropertyValue('--n-a'))||1, ink:cs.getPropertyValue('--n-ink').trim()||'233,237,240'}; this.baseDirty = true; }
+  readColors(){ const cs = getComputedStyle(document.documentElement); this.col = {line:cs.getPropertyValue('--n-line').trim()||'150,170,195', acc:cs.getPropertyValue('--n-acc').trim()||'92,225,198', acc2:cs.getPropertyValue('--n-acc2').trim()||'163,149,255', a:parseFloat(cs.getPropertyValue('--n-a'))||1, ink:cs.getPropertyValue('--n-ink').trim()||'233,237,240', bgc:cs.getPropertyValue('--n-bg').trim()||'35,39,45'}; if (this.code) this.code.dirty = true; this.baseDirty = true; }
 
   /* neural lattice */
   sizeField(){ const c = this.fieldRef.current; if (!c || !this.nodes) return; if (!innerWidth || !innerHeight){ cancelAnimationFrame(this.sfr); this.sfr = requestAnimationFrame(()=>this.sizeField()); return; }
@@ -1066,7 +1037,8 @@ class Component extends DCLogic {
   }
   initField(){ if (!this.fieldRef.current) return; this.nodes = []; this.sig = []; this.mouse = this.mouse || {x:-9999,y:-9999}; this.readColors(); this.sizeField(); this.lastSpawn = 0; this.drawField(0, true); }
   fire(i, hops){ const nb = this.adj[i]; if (!nb || !nb.length) return; const j = nb[Math.floor(Math.random()*nb.length)]; this.sig.push({a:i,b:j,t:0,h:hops,c:Math.random()<.65?'acc':'acc2'}); }
-  burst(x, y){ if (!this.nodes || this.motion()==='off') return; let bi=-1, bd=1e9; this.nodes.forEach((n,i)=>{ const d=Math.hypot(n.x-x,n.y-y); if (d<bd){bd=d;bi=i;} }); if (bi<0) return; for (let k=0;k<3;k++) this.fire(bi, 4); }
+  burst(x, y){ if (this.motion()==='off') return; const bgk = this.props.background ?? 'code'; if (bgk === 'code'){ const C = this.code; if (!C) return; const now = performance.now(); const bi = C.bots.findIndex(b=>Math.hypot(b.x - x, b.y - y) < 26); if (bi >= 0){ this.botRun(bi, null, now); return; } const ln = C.lines.find(l=>x >= l.x - 4 && x <= l.x + l.w + 4 && y >= l.y - 14 && y <= l.y + 6); if (ln && !C.bots.some(b=>b.busy && b.busy.line===ln)){ let fi = -1, fd = 1e9; C.bots.forEach((b,i)=>{ if (b.busy) return; const dd = Math.hypot(b.x - ln.x, b.y - ln.y); if (dd < fd){ fd = dd; fi = i; } }); if (fi >= 0) this.botRun(fi, ln, now); } return; }
+    if (bgk === 'embedding'){ const E = this.emb; if (!E) return; let bi = -1, bd = 1e9; E.pts.forEach((p,i)=>{ const dd = Math.hypot(p.sx-x, p.sy-y); if (dd < bd){ bd = dd; bi = i; } }); if (bi >= 0) this.embQuery(bi, performance.now()); return; } if (!this.nodes) return; let bi=-1, bd=1e9; this.nodes.forEach((n,i)=>{ const d=Math.hypot(n.x-x,n.y-y); if (d<bd){bd=d;bi=i;} }); if (bi<0) return; for (let k=0;k<3;k++) this.fire(bi, 4); }
   drawBase(){
     const c = this.fieldRef.current, d = this.dpr||1, col = this.col, A = col.a;
     if (!this.base) this.base = document.createElement('canvas');
@@ -1076,7 +1048,105 @@ class Component extends DCLogic {
     ctx.fillStyle = `rgba(${col.line},${.32*A})`; this.nodes.forEach(n=>{ ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,7); ctx.fill(); });
     this.baseDirty = false;
   }
+  buildCode(){
+    const W = innerWidth, H = innerHeight; if (!W || !H) return;
+    let seed = 29; const rnd = () => (seed = (seed*16807)%2147483647)/2147483647;
+    const m = document.createElement('canvas').getContext('2d'); m.font = '12px "Space Mono", monospace';
+    const lines = [], LH = 30; let k = 0;
+    for (let r=0; r*LH < H + LH; r++){ const y = 24 + r*LH; if (rnd() < .28) continue; let x = -rnd()*140;
+      while (x < W){ const s = SNIPS[(k++ * 7 + r*3) % SNIPS.length]; const w = m.measureText(s[0]).width; if (rnd() < .78) lines.push({x, y, t:s[0], o:s[1], w}); x += w + 70 + rnd()*200; } }
+    const spots = [[.05,.86],[.93,.18],[.62,.93],[.3,.1]];
+    const bots = spots.map(([px,py],i)=>{ const hx = Math.round(px*W), hy = Math.round(py*H); return {hx, hy, x:hx, y:hy, ph:i*1300, busy:null}; });
+    this.code = {W, H, lines, bots, dirty:true};
+  }
+  drawCodeBase(){
+    const C = this.code, c = this.fieldRef.current, d = this.dpr||1, col = this.col, A = col.a;
+    if (!this.cbase) this.cbase = document.createElement('canvas'); const b = this.cbase; b.width = c.width; b.height = c.height;
+    const ctx = b.getContext('2d'); ctx.setTransform(d,0,0,d,0,0); ctx.font = '12px "Space Mono", monospace'; ctx.fillStyle = 'rgba(' + col.ink + ',' + (.075*A) + ')';
+    C.lines.forEach(l=>ctx.fillText(l.t, l.x, l.y)); C.dirty = false;
+  }
+  drawBot(ctx, b, now, col, A){
+    const x = b.x - 9, y = b.y - 10, think = !!(this.state && this.state.thinking), busy = !!b.busy || think, blink = !think && ((now + b.ph) % 4200) < 140;
+    ctx.fillStyle = 'rgba(' + col.ink + ',' + (.12*A) + ')'; ctx.beginPath(); ctx.ellipse(b.x, y + 20, 8, 2, 0, 0, 7); ctx.fill();
+    ctx.strokeStyle = 'rgba(' + col.acc + ',' + A + ')'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(b.x, y + 4); ctx.lineTo(b.x, y); ctx.stroke(); ctx.lineWidth = 1;
+    const pulse = think ? .45 + .55*Math.abs(Math.sin(now/220 + b.ph)) : 1;
+    if (think){ ctx.fillStyle = 'rgba(' + col.acc2 + ',' + (.18*pulse*A) + ')'; ctx.beginPath(); ctx.arc(b.x, y - .5, 6, 0, 7); ctx.fill(); }
+    ctx.fillStyle = 'rgba(' + (busy ? col.acc2 : col.acc) + ',' + (pulse*A) + ')'; ctx.beginPath(); ctx.arc(b.x, y - .5, 1.8, 0, 7); ctx.fill();
+    ctx.fillStyle = 'rgba(' + col.acc + ',' + (.95*A) + ')'; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x, y + 4, 18, 13, 4); else ctx.rect(x, y + 4, 18, 13); ctx.fill();
+    ctx.fillStyle = 'rgba(' + col.bgc + ',1)'; const eh = blink ? .8 : 3.2, ex = think ? 1.4 : 0; ctx.fillRect(x + 4.5 + ex, y + 9 + (3.2-eh)/2, 2.4, eh); ctx.fillRect(x + 11 + ex, y + 9 + (3.2-eh)/2, 2.4, eh);
+    if (think){ ctx.font = '10px "Space Mono", monospace'; ctx.fillStyle = 'rgba(' + col.acc2 + ',' + A + ')'; ctx.fillText('.'.repeat(1 + Math.floor((now/300 + b.ph) % 3)), x + 20, y + 2); ctx.font = '12px "Space Mono", monospace'; }
+    if (busy) { ctx.fillRect(x + 7, y + 14, 4, 1); }
+  }
+  botRun(i, line, now){
+    const C = this.code; if (!C) return; const b = C.bots[i]; if (!b || b.busy) return;
+    if (!line){ let best = null, bd = 1e9; C.lines.forEach(l=>{ if (l.x < 30 || l.x + l.w > C.W - 10 || l.y < 40 || l.y > C.H - 20) return; if (C.bots.some(o=>o.busy && o.busy.line===l)) return; const dd = Math.hypot(l.x - b.x, l.y - b.y); if (dd < bd && dd > 40){ bd = dd; best = l; } }); line = best; }
+    if (!line) return;
+    b.busy = {line, t0: now, fx: b.x, fy: b.y, tx: line.x - 16, ty: line.y - 4, tw: Math.min(1400, line.t.length*30)};
+  }
+  drawCode(now, still){
+    const c = this.fieldRef.current; if (!c) return; if (!this.code || this.code.W !== innerWidth || this.code.H !== innerHeight) this.buildCode(); const C = this.code; if (!C) return;
+    const ctx = c.getContext('2d'), d = this.dpr||1, col = this.col, A = col.a;
+    if (C.dirty || !this.cbase || this.cbase.width !== c.width) this.drawCodeBase();
+    ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.drawImage(this.cbase,0,0); ctx.setTransform(d,0,0,d,0,0);
+    ctx.font = '12px "Space Mono", monospace';
+    const mx = this.mouse ? this.mouse.x : -9999, my = this.mouse ? this.mouse.y : -9999;
+    if (mx > -999 && !still){ [[210, 'ink', .2],[100, 'acc', .42]].forEach(([R, key, al])=>{ ctx.save(); ctx.beginPath(); ctx.arc(mx, my, R, 0, 7); ctx.clip(); ctx.fillStyle = 'rgba(' + col[key] + ',' + (al*A) + ')'; C.lines.forEach(l=>{ if (Math.abs(l.y - my) < R + 12 && l.x < mx + R && l.x + l.w > mx - R) ctx.fillText(l.t, l.x, l.y); }); ctx.restore(); }); }
+    const ease = t => t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
+    C.bots.forEach(b=>{
+      const B = b.busy;
+      if (B){ const t = now - B.t0, MV = 800, OUT = 2200;
+        if (t < MV){ const e = ease(Math.max(0, t)/MV); b.x = B.fx + (B.tx-B.fx)*e; b.y = B.fy + (B.ty-B.fy)*e; }
+        else if (t < MV + B.tw + OUT){ b.x = B.tx; b.y = B.ty; const p = Math.min(1, (t-MV)/B.tw), n = Math.floor(B.line.t.length*p);
+          ctx.fillStyle = 'rgba(' + col.acc + ',' + A + ')'; ctx.fillText(B.line.t.slice(0,n), B.line.x, B.line.y);
+          if (p < 1){ const cw = ctx.measureText(B.line.t.slice(0,n)).width; ctx.fillRect(B.line.x + cw + 1, B.line.y - 10, 7, 13); }
+          else { const ot = t - MV - B.tw, fa = ot < 200 ? ot/200 : ot > OUT - 300 ? Math.max(0,(OUT-ot)/300) : 1; const txt = '→ ' + B.line.o; const tw = ctx.measureText(txt).width + 18, bx = Math.min(B.line.x + 8, C.W - tw - 8), by = B.line.y - 38;
+            ctx.globalAlpha = fa; ctx.fillStyle = 'rgba(' + col.bgc + ',.96)'; ctx.strokeStyle = 'rgba(' + col.acc + ',' + (.6*A) + ')'; ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, tw, 24, 6); else ctx.rect(bx, by, tw, 24); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = 'rgba(' + col.ink + ',' + A + ')'; ctx.fillText(txt, bx + 9, by + 16); ctx.globalAlpha = 1; } }
+        else if (t < MV*2 + B.tw + OUT){ const e = ease((t - MV - B.tw - OUT)/MV); b.x = B.tx + (b.hx - B.tx)*e; b.y = B.ty + (b.hy - B.ty)*e; }
+        else { b.busy = null; b.x = b.hx; b.y = b.hy; } }
+      this.drawBot(ctx, b, now, col, A);
+    });
+  }
+  buildEmbed(){
+    let seed = 11; const rnd = () => (seed = (seed*16807)%2147483647)/2147483647;
+    const gauss = () => { let u = 0, v = 0; while(!u) u = rnd(); while(!v) v = rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); };
+    const pts = [], C = 8;
+    for (let c=0;c<C;c++){ const th = rnd()*Math.PI*2, ph = Math.acos(2*rnd()-1), rr = .55 + rnd()*.5; const cx = rr*Math.sin(ph)*Math.cos(th), cy = rr*Math.cos(ph)*.8, cz = rr*Math.sin(ph)*Math.sin(th), s = .1 + rnd()*.09, n = 34 + Math.floor(rnd()*22);
+      for (let i=0;i<n;i++) pts.push({x:cx+gauss()*s, y:cy+gauss()*s, z:cz+gauss()*s, c}); }
+    for (let i=0;i<70;i++){ const th = rnd()*Math.PI*2, ph = Math.acos(2*rnd()-1), rr = Math.cbrt(rnd())*1.35; pts.push({x:rr*Math.sin(ph)*Math.cos(th), y:rr*Math.cos(ph)*.8, z:rr*Math.sin(ph)*Math.sin(th), c:-1}); }
+    const edges = [];
+    pts.forEach((p,i)=>{ if (p.c<0) return; const ds = []; pts.forEach((q,j)=>{ if (j!==i && q.c===p.c) ds.push([(p.x-q.x)**2+(p.y-q.y)**2+(p.z-q.z)**2, j]); }); ds.sort((a,b)=>a[0]-b[0]); ds.slice(0,2).forEach(([,j])=>{ if (j>i) edges.push([i,j]); }); });
+    this.emb = {pts, edges, px:0, py:0, q:null, lastQ:-9999, order: pts.map((_,i)=>i)};
+  }
+  embQuery(i, now){ const E = this.emb; const p = E.pts[i]; const ds = E.pts.map((q,j)=>[j===i?1e9:(p.x-q.x)**2+(p.y-q.y)**2+(p.z-q.z)**2, j]).sort((a,b)=>a[0]-b[0]).slice(0,6); E.q = {i, nb: ds.map(d=>d[1]), sim: (1 - Math.sqrt(ds[0][0])/2).toFixed(2), t0: now}; E.lastQ = now; }
+  drawEmbed(now, still){
+    const c = this.fieldRef.current; if (!c) return; const ctx = c.getContext('2d'), d = this.dpr||1, W = innerWidth, H = innerHeight, col = this.col, A = col.a;
+    if (!this.emb) this.buildEmbed(); const E = this.emb;
+    ctx.setTransform(d,0,0,d,0,0); ctx.clearRect(0,0,W,H);
+    const tmx = this.mouse && this.mouse.x > -999 ? this.mouse.x/W - .5 : 0, tmy = this.mouse && this.mouse.y > -999 ? this.mouse.y/H - .5 : 0;
+    E.px += (tmx - E.px)*.03; E.py += (tmy - E.py)*.03;
+    const ay = (still ? .6 : now*.000045) + E.px*.6, ax = .32 + E.py*.35, cy = Math.cos(ay), sy = Math.sin(ay), cx = Math.cos(ax), sx = Math.sin(ax);
+    const S = Math.max(W, H)*.34, ox = W*.5, oy = H*.52;
+    E.pts.forEach(p=>{ const x1 = p.x*cy + p.z*sy, z1 = -p.x*sy + p.z*cy, y1 = p.y*cx - z1*sx, z2 = p.y*sx + z1*cx, k = 3/(z2 + 3.4); p.sx = ox + x1*k*S; p.sy = oy + y1*k*S; p.k = k; });
+    ctx.lineWidth = 1;
+    E.edges.forEach(([i,j])=>{ const a = E.pts[i], b = E.pts[j]; ctx.strokeStyle = 'rgba(' + col.line + ',' + (Math.max(0,(a.k-.6))*.09*A) + ')'; ctx.beginPath(); ctx.moveTo(a.sx,a.sy); ctx.lineTo(b.sx,b.sy); ctx.stroke(); });
+    E.order.sort((a,b)=>E.pts[a].k - E.pts[b].k);
+    E.order.forEach(i=>{ const p = E.pts[i], t = Math.max(0, Math.min(1, (p.k-.62)/.75)); ctx.fillStyle = 'rgba(' + col.line + ',' + ((.1 + t*.5)*A) + ')'; ctx.beginPath(); ctx.arc(p.sx, p.sy, .5 + t*1.9, 0, 7); ctx.fill(); });
+    const gap = this.motion()==='calm' ? 7000 : 4800;
+    if (!still && now - E.lastQ > gap){ let i, tries = 0; do { i = Math.floor(Math.random()*E.pts.length); } while ((E.pts[i].c < 0 || E.pts[i].k < 1) && ++tries < 40); this.embQuery(i, now); }
+    const Q = E.q; if (!Q) return;
+    const age = now - Q.t0, grow = Math.min(1, age/800), fade = age < 2800 ? 1 : Math.max(0, 1 - (age-2800)/900); if (fade <= 0){ E.q = null; return; }
+    const q = E.pts[Q.i];
+    Q.nb.forEach((j,n)=>{ const b = E.pts[j], g = Math.max(0, Math.min(1, grow*1.6 - n*.12)); if (g <= 0) return; const x = q.sx + (b.sx-q.sx)*g, y = q.sy + (b.sy-q.sy)*g;
+      ctx.strokeStyle = 'rgba(' + col.acc + ',' + (.45*fade*A) + ')'; ctx.beginPath(); ctx.moveTo(q.sx,q.sy); ctx.lineTo(x,y); ctx.stroke();
+      if (g >= 1){ ctx.fillStyle = 'rgba(' + col.acc2 + ',' + (.85*fade*A) + ')'; ctx.beginPath(); ctx.arc(b.sx, b.sy, 2.4, 0, 7); ctx.fill(); } });
+    const pr = 6 + 10*((age % 1600)/1600);
+    ctx.strokeStyle = 'rgba(' + col.acc + ',' + ((1-(age%1600)/1600)*.5*fade*A) + ')'; ctx.beginPath(); ctx.arc(q.sx, q.sy, pr, 0, 7); ctx.stroke();
+    ctx.fillStyle = 'rgba(' + col.acc + ',' + (fade*A) + ')'; ctx.beginPath(); ctx.arc(q.sx, q.sy, 3, 0, 7); ctx.fill();
+    ctx.font = '10px "Space Mono", monospace'; ctx.fillStyle = 'rgba(' + col.line + ',' + (.6*fade*grow*A) + ')'; ctx.fillText('query · top-6 · cos ' + Q.sim, q.sx + 12, q.sy - 10);
+  }
   drawField(now, still){
+    const bgm = this.props.background ?? 'code'; if (bgm === 'code') return this.drawCode(now, still); if (bgm === 'embedding') return this.drawEmbed(now, still);
     const c = this.fieldRef.current; if (!c || !this.nodes || !this.nodes.length) return; const ctx = c.getContext('2d'), d = this.dpr||1, W = innerWidth, H = innerHeight, col = this.col, A = col.a;
     if (this.baseDirty) this.drawBase();
     ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.drawImage(this.base,0,0); ctx.setTransform(d,0,0,d,0,0);
@@ -1087,7 +1157,7 @@ class Component extends DCLogic {
     this.nodes.forEach(n=>{ if (n.q < .02) return; ctx.fillStyle = `rgba(${col.acc},${n.q*.22*A})`; ctx.beginPath(); ctx.arc(n.x,n.y,n.r+5*n.q,0,7); ctx.fill(); if (!still) n.q *= .965; });
     if (still) return;
     const calm = this.motion()==='calm';
-    if (now - this.lastSpawn > (calm?3200:2000) && this.sig.length < (calm?2:4)){ this.lastSpawn = now; this.fire(Math.floor(Math.random()*this.nodes.length), 5); }
+    if (false && now - this.lastSpawn > (calm?3200:2000) && this.sig.length < (calm?2:4)){ this.lastSpawn = now; this.fire(Math.floor(Math.random()*this.nodes.length), 5); }
     const next = [], speed = calm ? .006 : .009;
     this.sig.forEach(s=>{ const p=this.nodes[s.a], q=this.nodes[s.b]; if (!p||!q) return; s.t += speed; const t=Math.min(s.t,1), x=p.x+(q.x-p.x)*t, y=p.y+(q.y-p.y)*t, tt=Math.max(0,t-.5), tx=p.x+(q.x-p.x)*tt, ty=p.y+(q.y-p.y)*tt, rgb=col[s.c];
       const gr = ctx.createLinearGradient(tx,ty,x,y); gr.addColorStop(0,`rgba(${rgb},0)`); gr.addColorStop(1,`rgba(${rgb},${.45*A})`); ctx.strokeStyle=gr; ctx.lineWidth=1.2; ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(x,y); ctx.stroke(); ctx.lineWidth=1;
@@ -1099,9 +1169,9 @@ class Component extends DCLogic {
   loop(){
     cancelAnimationFrame(this.raf);
     const m = this.motion();
-    if (m==='off'){ requestAnimationFrame(()=>{ this.drawField(0,true); this.drawName(performance.now()); }); return; }
+    if (m==='off'){ requestAnimationFrame(()=>this.drawField(0,true)); return; }
     const tick = now => {
-      if (!document.hidden){ this.drawField(now, false); this.drawName(now); }
+      if (!document.hidden) this.drawField(now, false);
       document.querySelectorAll('[data-pk]').forEach(el => {
         const p = document.getElementById(el.dataset.pk); if (!p) return;
         const L = p.getTotalLength(), dur = +el.dataset.dur||4000, t = ((now + (+el.dataset.delay||0)) % dur)/dur;
@@ -1134,9 +1204,7 @@ class Component extends DCLogic {
 
   intro(){
     this.fixLetters();
-    const nb = () => { this.buildName(!document.hidden); if (this.np) this.nameBuilt = true; if (this.motion()==='off') this.drawName(performance.now()); };
-    (document.fonts && document.fonts.load) ? document.fonts.load('500 100px "Space Grotesk"').then(nb, nb) : nb();
-    if (this.motion()==='off') this.typeCode(false);
+    this.typeCode(false);
     this.startMarquee();
     const m = this.motion(); if (m==='off') return;
     const full = m==='full';
@@ -1169,9 +1237,8 @@ class Component extends DCLogic {
       en.target.querySelectorAll('[data-scr]').forEach(s=>this.scramble(s, s.textContent, 800, 150));
       if (en.target.hasAttribute('data-scr')) this.scramble(en.target, en.target.textContent, 800, 150);
       if (en.target.querySelector('[data-draw]')) this.drawPaths(en.target, 250);
-      if (en.target.querySelector('[data-typecode]')) this.typeCode(false);
     }), {rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('[data-reveal]').forEach(el => { if (el.getBoundingClientRect().top > innerHeight*.9) this.io.observe(el); else if (el.querySelector('[data-typecode]') && this.codeRef.current && !this.codeRef.current.textContent && !this.typing) this.typeCode(false); });
+    document.querySelectorAll('[data-reveal]').forEach(el => { if (el.getBoundingClientRect().top > innerHeight*.9) this.io.observe(el); });
   }
   moveInd(key){ const wrap=this.navWrap.current, ind=this.navInd.current; if (!wrap||!ind) return; const el = key && wrap.querySelector(`[data-navkey="${key}"]`); if (!el){ ind.style.opacity=0; return; } ind.style.opacity=1; ind.style.transform=`translateX(${el.offsetLeft}px)`; ind.style.width=el.offsetWidth+'px'; }
   scrollFx(){
@@ -1245,7 +1312,13 @@ class Component extends DCLogic {
     c.push({label:'LinkedIn', kind:'Link ↗', run:()=>{this.closePal(); open('https://www.linkedin.com/in/unnati9/','_blank');}});
     c.push({label:'GitHub profile', kind:'Link ↗', run:()=>{this.closePal(); open('https://github.com/unnatibshah','_blank');}});
     const q = this.state.q.trim().toLowerCase();
+    if (q.startsWith('sudo h')) return [{label:'sudo hire unnati', kind:'Run ↵', run:()=>this.hire()}];
     return q ? c.filter(x=>(x.label+' '+x.kind).toLowerCase().includes(q)) : c;
+  }
+  hire(){
+    this.closePal(); const now = performance.now();
+    if (this.code && (this.props.background ?? 'code') === 'code'){ this.code.bots.forEach((b,i)=>{ b.busy = null; b.x = b.hx; b.y = b.hy; }); this.code.bots.forEach((b,i)=>this.botRun(i, null, now + i*120)); }
+    this.setState({hire:true}); clearTimeout(this.hireT); this.hireT = setTimeout(()=>this.setState({hire:false}), 9000);
   }
   copy(){ try{ navigator.clipboard.writeText(EMAIL); }catch(_){} this.setState({copied:true}); clearTimeout(this.ct); this.ct = setTimeout(()=>this.setState({copied:false}), 1800); }
 
@@ -1345,7 +1418,14 @@ class Component extends DCLogic {
       thinking:s.thinking, traceSteps: ['route · intent','retrieve · résumé context','compose · answer'].map((label,i)=>{ const st = i<s.trace?'done':i===s.trace?'run':'wait'; return {label, state: st==='done'?'ok':st==='run'?'…':'', mark: st==='done'?'✓':st==='run'?'›':'·', markColor: st==='wait'?'var(--faint)':'var(--acc-ink)', color: st==='wait'?'var(--faint)':'var(--ink)'}; }),
       aq:s.aq, onAq:e=>this.setState({aq:e.target.value}), agentSubmit:e=>{ e.preventDefault(); this.ask(this.state.aq); },
       sendOff: !s.aq.trim() || s.thinking, sendOp: (!s.aq.trim() || s.thinking) ? .35 : 1,
-      boot:s.boot, bootRef:this.bootRef, ghostRef:this.ghostRef, nameRef:this.nameRef, skipBoot:this.skipBoot, bootPct: Math.min(1, s.bootN/BOOT.length), bootPctLabel: Math.round(Math.min(1, s.bootN/BOOT.length)*100)+'%',
+      termWrap:this.termWrap, ghostHiRef:this.ghostHiRef, ghostShow: (s.vw||1400) >= 1100 ? 'block' : 'none',
+      termOn:e=>{ const el = e.currentTarget, w = this.termWrap.current; if (!w) return; const a = el.getBoundingClientRect(), b = w.getBoundingClientRect(); this.setState({term:el.dataset.term, termPos:[Math.max(0, Math.min(a.left - b.left, b.width - 320)), a.bottom - b.top + 10]}); },
+      termOff:()=>this.setState({term:null}),
+      termGo:e=>{ const k = e.currentTarget.dataset.term; this.setState({term:null}); this.go('#/work/' + TERMS[k].slug); },
+      termKey:e=>{ if (e.key==='Enter' || e.key===' '){ e.preventDefault(); const k = e.currentTarget.dataset.term; this.go('#/work/' + TERMS[k].slug); } },
+      termCard: TERMS[s.term] || TERMS[this.lastTerm || 'orch'], termHidden: s.term?'false':'true', termOp: s.term?1:0, termShift: s.term?'0px':'6px', termX: s.termPos[0]+'px', termY: s.termPos[1]+'px',
+      hire:s.hire, closeHire:()=>{ clearTimeout(this.hireT); this.setState({hire:false}); },
+      boot:s.boot, bootRef:this.bootRef, ghostRef:this.ghostRef, skipBoot:this.skipBoot, bootPct: Math.min(1, s.bootN/BOOT.length), bootPctLabel: Math.round(Math.min(1, s.bootN/BOOT.length)*100)+'%',
       bootLines: BOOT.map(([verb,what,status],i)=>({verb, what, status, op: i<s.bootN?1:0, y: i<s.bootN?'0px':'6px', stColor: status==='ready'?'var(--acc-ink)':'var(--mute)'})),
       projects, repos, filters, exp, pubRef:this.pubRef,
       rq:s.rq, onRq:e=>this.setState({rq:e.target.value, page:0}), repoEmpty: list.length===0,
