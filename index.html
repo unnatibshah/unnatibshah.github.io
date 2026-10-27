@@ -579,11 +579,18 @@ button{font:inherit;color:inherit}
   <div data-d="1" style="margin-top:clamp(56px,9vh,96px);display:flex;flex-direction:column">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line2)">
       <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">My contribution</span>
-      <ul style="grid-column:span 3;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;max-width:48rem">
-        <sc-for list="{{ cur.contribution }}" as="c" hint-placeholder-count="2">
-          <li style="font-size:17px;line-height:1.6;text-wrap:pretty">{{ c }}</li>
-        </sc-for>
-      </ul>
+      <div data-run="1" style="grid-column:span 3;max-width:48rem;border:1px solid var(--line2);border-radius:14px;background:var(--card);overflow:hidden">
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);font-family:'Space Mono',monospace;font-size:12px;color:var(--mute)">
+          <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">$ unnati.agent run {{ cur.slug }}</span>
+          <span aria-hidden="true" style="display:grid;color:var(--acc-ink);white-space:nowrap"><span data-run-a="1" style="grid-area:1/1;opacity:0">● running</span><span data-run-b="1" style="grid-area:1/1">✓ done</span></span>
+        </div>
+        <ol style="margin:0;padding:18px;list-style:none;display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ cur.contribution }}" as="c" hint-placeholder-count="2">
+            <li data-ln="1" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:baseline"><span aria-hidden="true" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--acc-ink)">→ {{ c.n }}</span><span style="font-size:17px;line-height:1.6;text-wrap:pretty">{{ c.t }}</span><span aria-hidden="true" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--acc-ink)">✓</span></li>
+          </sc-for>
+        </ol>
+        <div data-ln="1" aria-hidden="true" style="padding:12px 18px;border-top:1px dashed var(--line2);font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)">← done · {{ cur.stepCount }} · exit 0</div>
+      </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line)">
       <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Technical decisions</span>
@@ -598,33 +605,15 @@ button{font:inherit;color:inherit}
       <p style="grid-column:span 3;margin:0;padding:16px 18px;border:1px dashed var(--line2);border-radius:6px;font-family:'Space Mono',monospace;font-size:12px;line-height:1.6;color:var(--faint);max-width:48rem">Not covered in the résumé. Add your own notes here: what was hard, what you chose against, and why.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line)">
-      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Agent run</span>
-      <div data-run="1" style="grid-column:span 3;max-width:48rem;border:1px solid var(--line2);border-radius:14px;background:var(--card);overflow:hidden;font-family:'Space Mono',monospace;font-size:12px">
-        <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);color:var(--mute)">
-          <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">$ unnati.agent run {{ cur.slug }}</span>
-          <span aria-hidden="true" style="display:grid;color:var(--acc-ink);white-space:nowrap"><span data-run-a="1" style="grid-area:1/1;opacity:0">● running</span><span data-run-b="1" style="grid-area:1/1">✓ done</span></span>
-        </div>
-        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:8px;line-height:1.55">
-          <div data-ln="1" style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px"><span style="color:var(--acc2)">▸ plan</span><span style="color:var(--ink)">{{ cur.problem }}</span></div>
-          <sc-for list="{{ cur.stages }}" as="st" hint-placeholder-count="5">
-            <div data-ln="1" style="display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;color:var(--mute)"><span style="color:var(--acc-ink)">→ step {{ st.n }}</span><span>{{ st.label }} <span style="color:var(--faint)">· {{ st.sub }}</span></span><span style="color:var(--acc-ink)">✓</span></div>
-          </sc-for>
-          <div data-ln="1" style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;color:var(--faint)"><span>← done</span><span>{{ cur.stepCount }} steps · exit 0</span></div>
-        </div>
-        <div style="border-top:1px dashed var(--line2);padding:16px 18px">
-          <div data-ln="1" style="color:var(--faint);letter-spacing:.08em;margin-bottom:12px">EVALS</div>
-          <dl style="margin:0;display:flex;flex-direction:column;gap:12px">
-            <sc-for list="{{ cur.outcomes }}" as="o" hint-placeholder-count="3">
-              <div data-ln="1" style="display:grid;grid-template-columns:16px minmax(0,1fr) auto auto;gap:12px;align-items:baseline">
-                <span aria-hidden="true" style="color:var(--acc-ink)">✓</span>
-                <dt style="font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.4;color:var(--mute)">{{ o.l }}</dt>
-                <dd data-count="1" style="margin:0;font-family:'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(20px,2.2vw,28px);font-weight:500;letter-spacing:-.03em;line-height:1;color:var(--ink)">{{ o.v }}</dd>
-                <span style="font-size:10px;color:var(--acc-ink);border:1px solid color-mix(in oklab,var(--acc) 40%,transparent);border-radius:999px;padding:2px 8px">pass</span>
-              </div>
-            </sc-for>
-          </dl>
-        </div>
-      </div>
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Outcomes</span>
+      <dl style="grid-column:span 3;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:28px 32px">
+        <sc-for list="{{ cur.outcomes }}" as="o" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column-reverse;gap:6px;border-top:1px solid var(--acc-ink);padding-top:14px">
+            <dt style="font-size:14px;line-height:1.45;color:var(--mute)">{{ o.l }}</dt>
+            <dd data-count="1" style="margin:0;font-variant-numeric:tabular-nums;font-size:clamp(32px,3.4vw,52px);letter-spacing:-.04em;line-height:1;font-weight:500">{{ o.v }}</dd>
+          </div>
+        </sc-for>
+      </dl>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
       <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Links</span>
@@ -997,13 +986,12 @@ class Component extends DCLogic {
     if (el && this.motion()!=='off' && !document.hidden){ let fired=false; const d=()=>{ if(fired) return; fired=true; done(); }; const an = el.animate([{clipPath:'inset(0 0 0 0)'},{clipPath:'inset(0 0 100% 0)'}],{duration:650,easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'}); an.onfinish = d; setTimeout(d, 730); } else done(); }
   skipBoot = () => { this.setState({bootN:BOOT.length}); if (this.booted){ this.setState({boot:false}); return; } this.endBoot(); };
   ringRef = React.createRef();
-  // Case study "Agent run": lines appear one by one, then the eval numbers count up. Returns play().
+  // Case study "My contribution" as an agent run: steps appear one by one. Returns play().
   prepTrace(run){ const lns = [...run.querySelectorAll('[data-ln]')], gap = 240, end = lns.length*gap;
     const anims = lns.map((l,i)=>l.animate([{opacity:0,transform:'translateX(-8px)'},{opacity:1,transform:'none'}],{duration:350, delay:i*gap, easing:'cubic-bezier(.2,.7,.1,1)', fill:'backwards'}));
     anims.push(run.querySelector('[data-run-a]').animate([{opacity:1},{opacity:.35},{opacity:1}],{duration:end/3, iterations:3}), run.querySelector('[data-run-b]').animate([{opacity:0},{opacity:1}],{duration:300, delay:end, fill:'backwards'}));
     (this.traceAnims||[]).forEach(a=>a.cancel()); this.traceAnims = anims; anims.forEach(a=>a.pause());
-    const firstEval = lns.findIndex(l=>l.querySelector('[data-count]'));
-    return () => { anims.forEach(a=>a.play()); setTimeout(()=>this.countUp(run.querySelector('dl')), firstEval*gap); }; }
+    return () => anims.forEach(a=>a.play()); }
   // Experience: "thinking", then each bullet streams in word by word like LLM output.
   streamExp(){ const box = document.querySelector('[data-exp]'); if (!box) return; const T = 700, W = 14;
     const [a, b] = box.querySelectorAll('[data-think] > span');
@@ -1309,6 +1297,7 @@ class Component extends DCLogic {
       scrollTo({top:0, behavior:'auto'});
       const el = this.detailRef.current;
       if (el && this.motion()!=='off'){ el.querySelectorAll('[data-d]').forEach((d,i)=> d.animate([{opacity:0,transform:'translateY(24px)',filter:'blur(6px)'},{opacity:1,transform:'none',filter:'blur(0)'}],{duration:900, delay:i*100, easing:'cubic-bezier(.2,.7,.1,1)', fill:'backwards'})); this.drawPaths(el, 300); const pl = el.querySelector('[data-pipe]'); pl && pl.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:1300,delay:300,easing:'cubic-bezier(.65,0,.35,1)',fill:'backwards'}); }
+      if (el){ if (this.oio) this.oio.disconnect(); const dl = el.querySelector('dl'); if (dl && 'IntersectionObserver' in window){ this.oio = new IntersectionObserver(es=>{ if (es[0].isIntersecting){ this.oio.disconnect(); this.countUp(dl); } }, {rootMargin:'0px 0px -10% 0px'}); this.oio.observe(dl); } }
       if (el){ if (this.cio) this.cio.disconnect(); const run = el.querySelector('[data-run]'); if (run && this.motion()!=='off' && 'IntersectionObserver' in window){ const play = this.prepTrace(run); this.cio = new IntersectionObserver(es=>{ if (es[0].isIntersecting){ this.cio.disconnect(); play(); } }, {rootMargin:'0px 0px -15% 0px'}); this.cio.observe(run); } }
       this.setState({active:''});
     } else {
@@ -1412,8 +1401,8 @@ class Component extends DCLogic {
         decisions:p.decisions.map((t,i)=>({n:String(i+1).padStart(2,'0'),t})),
         diagHint:'Drawn from résumé descriptions · verify against implementation',
         stageNum: `${String(st+1).padStart(2,'0')} / ${String(p.stages.length).padStart(2,'0')}`, stageNote:p.stages[st].note,
-        stepCount:p.stages.length,
-        stages:p.stages.map((x,i)=>({...x, n:String(i+1).padStart(2,'0'), on:i===st?'true':'false', pick:()=>this.setState({stage:i}),
+        stepCount:p.contribution.length+(p.contribution.length>1?' steps':' step'), contribution:p.contribution.map((t,i)=>({n:String(i+1).padStart(2,'0'), t})),
+        stages:p.stages.map((x,i)=>({...x, on:i===st?'true':'false', pick:()=>this.setState({stage:i}),
           border:i===st?'var(--acc-ink)':(p.kind==='hub'?'var(--line2)':'var(--ink)'), fill:i===st?'var(--acc-ink)':'var(--bg)', color:i===st?'var(--ink)':'var(--mute)'}))};
       cur.hub = {}; [0,1,2,3,4].forEach(i=>cur.hub['s'+i] = i===st ? 1 : 0);
       next = {num:n.num, title:n.title, href:'#/work/'+n.slug, open:this.nav('#/work/'+n.slug)};
