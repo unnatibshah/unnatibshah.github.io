@@ -335,16 +335,18 @@ button{font:inherit;color:inherit}
               <div data-exp="1" style="padding:0 0 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:8px 32px">
                 <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)">{{ e.place }}</span>
                 <div style="grid-column:span 3;display:flex;flex-direction:column;gap:18px;max-width:48rem">
+                  <div data-think="1" aria-hidden="true" style="display:grid;font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)"><span style="grid-area:1/1;opacity:0;color:var(--acc-ink)">● thinking…</span><span style="grid-area:1/1">▸ Thought for 0.7s</span></div>
                   <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px">
                     <sc-for list="{{ e.points }}" as="pt" hint-placeholder-count="3">
                       <li data-pt="1" style="display:grid;grid-template-columns:20px minmax(0,1fr);font-size:15px;line-height:1.6;color:var(--mute);text-wrap:pretty"><span aria-hidden="true" style="color:var(--acc-ink);font-family:'Space Mono',monospace">›</span><span>{{ pt }}</span></li>
                     </sc-for>
                   </ul>
-                  <div style="display:flex;gap:10px;flex-wrap:wrap">
+                  <div data-after="1" style="display:flex;gap:10px;flex-wrap:wrap">
                     <sc-for list="{{ e.links }}" as="lk" hint-placeholder-count="1">
                       <a href="{{ lk.href }}" onClick="{{ lk.go }}" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--acc-ink);border:1px solid color-mix(in oklab,var(--acc) 40%,transparent);border-radius:999px;padding:6px 12px;transition:background-color .3s" style-hover="background:color-mix(in oklab,var(--acc) 14%,transparent)">→ {{ lk.label }}</a>
                     </sc-for>
                   </div>
+                  <span data-after="1" aria-hidden="true" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--faint)">■ eos · ≈{{ e.tok }} tokens</span>
                 </div>
               </div>
             </sc-if>
@@ -596,15 +598,33 @@ button{font:inherit;color:inherit}
       <p style="grid-column:span 3;margin:0;padding:16px 18px;border:1px dashed var(--line2);border-radius:6px;font-family:'Space Mono',monospace;font-size:12px;line-height:1.6;color:var(--faint);max-width:48rem">Not covered in the résumé. Add your own notes here: what was hard, what you chose against, and why.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line)">
-      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Outcomes</span>
-      <dl style="grid-column:span 3;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:28px 32px">
-        <sc-for list="{{ cur.outcomes }}" as="o" hint-placeholder-count="3">
-          <div style="display:flex;flex-direction:column-reverse;gap:6px;border-top:1px solid var(--acc-ink);padding-top:14px">
-            <dt style="font-size:14px;line-height:1.45;color:var(--mute)">{{ o.l }}</dt>
-            <dd data-count="1" style="margin:0;font-variant-numeric:tabular-nums;font-size:clamp(32px,3.4vw,52px);letter-spacing:-.04em;line-height:1;font-weight:500">{{ o.v }}</dd>
-          </div>
-        </sc-for>
-      </dl>
+      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Agent run</span>
+      <div data-run="1" style="grid-column:span 3;max-width:48rem;border:1px solid var(--line2);border-radius:14px;background:var(--card);overflow:hidden;font-family:'Space Mono',monospace;font-size:12px">
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);color:var(--mute)">
+          <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">$ unnati.agent run {{ cur.slug }}</span>
+          <span aria-hidden="true" style="display:grid;color:var(--acc-ink);white-space:nowrap"><span data-run-a="1" style="grid-area:1/1;opacity:0">● running</span><span data-run-b="1" style="grid-area:1/1">✓ done</span></span>
+        </div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:8px;line-height:1.55">
+          <div data-ln="1" style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px"><span style="color:var(--acc2)">▸ plan</span><span style="color:var(--ink)">{{ cur.problem }}</span></div>
+          <sc-for list="{{ cur.stages }}" as="st" hint-placeholder-count="5">
+            <div data-ln="1" style="display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;color:var(--mute)"><span style="color:var(--acc-ink)">→ step {{ st.n }}</span><span>{{ st.label }} <span style="color:var(--faint)">· {{ st.sub }}</span></span><span style="color:var(--acc-ink)">✓</span></div>
+          </sc-for>
+          <div data-ln="1" style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;color:var(--faint)"><span>← done</span><span>{{ cur.stepCount }} steps · exit 0</span></div>
+        </div>
+        <div style="border-top:1px dashed var(--line2);padding:16px 18px">
+          <div data-ln="1" style="color:var(--faint);letter-spacing:.08em;margin-bottom:12px">EVALS</div>
+          <dl style="margin:0;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ cur.outcomes }}" as="o" hint-placeholder-count="3">
+              <div data-ln="1" style="display:grid;grid-template-columns:16px minmax(0,1fr) auto auto;gap:12px;align-items:baseline">
+                <span aria-hidden="true" style="color:var(--acc-ink)">✓</span>
+                <dt style="font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.4;color:var(--mute)">{{ o.l }}</dt>
+                <dd data-count="1" style="margin:0;font-family:'Space Grotesk',sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(20px,2.2vw,28px);font-weight:500;letter-spacing:-.03em;line-height:1;color:var(--ink)">{{ o.v }}</dd>
+                <span style="font-size:10px;color:var(--acc-ink);border:1px solid color-mix(in oklab,var(--acc) 40%,transparent);border-radius:999px;padding:2px 8px">pass</span>
+              </div>
+            </sc-for>
+          </dl>
+        </div>
+      </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
       <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Links</span>
@@ -747,6 +767,8 @@ button{font:inherit;color:inherit}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#ff7a90&quot;,&quot;options&quot;:[&quot;#5ce1c6&quot;,&quot;#ffb86b&quot;,&quot;#8fb4ff&quot;,&quot;#ff7a90&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;full&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;calm&quot;,&quot;off&quot;],&quot;tsType&quot;:&quot;'full'|'calm'|'off'&quot;},&quot;background&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;code&quot;,&quot;options&quot;:[&quot;code&quot;,&quot;lattice&quot;,&quot;embedding&quot;],&quot;tsType&quot;:&quot;'code'|'lattice'|'embedding'&quot;},&quot;intro&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+// {{ bindings }} render inside <span class="sc-interp">; animations need the raw text node.
+const textOf = el => document.createTreeWalker(el, NodeFilter.SHOW_TEXT).nextNode();
 const PROJECTS = [
   { slug:'multi-agent-routing', title:'Stateful multi-agent intent routing', org:'Johnson & Johnson', years:'2025–Present', kind:'hub',
     stack:['A2A','LangGraph','Model Context Protocol'],
@@ -975,7 +997,23 @@ class Component extends DCLogic {
     if (el && this.motion()!=='off' && !document.hidden){ let fired=false; const d=()=>{ if(fired) return; fired=true; done(); }; const an = el.animate([{clipPath:'inset(0 0 0 0)'},{clipPath:'inset(0 0 100% 0)'}],{duration:650,easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'}); an.onfinish = d; setTimeout(d, 730); } else done(); }
   skipBoot = () => { this.setState({bootN:BOOT.length}); if (this.booted){ this.setState({boot:false}); return; } this.endBoot(); };
   ringRef = React.createRef();
-  countUp(root){ if (!root || this.motion()==='off') return; root.querySelectorAll('[data-count]').forEach((el,i)=>{ const n = el.firstChild; if (!n || n.nodeType!==3) return; const final = n.nodeValue; const m = final.match(/^([^\d]*)([\d.,]+)(.*)$/); if (!m) return; const num = parseFloat(m[2].replace(/,/g,'')), dec = (m[2].split('.')[1]||'').length; const t0 = performance.now()+350+i*120, dur = 1400; const step = now => { if (n.nodeValue !== final && el.firstChild !== n) return; const p = Math.max(0, Math.min(1, (now-t0)/dur)); n.nodeValue = p>=1 ? final : m[1] + (num*ease(p)).toFixed(dec) + m[3]; if (p<1) requestAnimationFrame(step); }; n.nodeValue = m[1] + (0).toFixed(dec) + m[3]; requestAnimationFrame(step); }); }
+  // Case study "Agent run": lines appear one by one, then the eval numbers count up. Returns play().
+  prepTrace(run){ const lns = [...run.querySelectorAll('[data-ln]')], gap = 240, end = lns.length*gap;
+    const anims = lns.map((l,i)=>l.animate([{opacity:0,transform:'translateX(-8px)'},{opacity:1,transform:'none'}],{duration:350, delay:i*gap, easing:'cubic-bezier(.2,.7,.1,1)', fill:'backwards'}));
+    anims.push(run.querySelector('[data-run-a]').animate([{opacity:1},{opacity:.35},{opacity:1}],{duration:end/3, iterations:3}), run.querySelector('[data-run-b]').animate([{opacity:0},{opacity:1}],{duration:300, delay:end, fill:'backwards'}));
+    (this.traceAnims||[]).forEach(a=>a.cancel()); this.traceAnims = anims; anims.forEach(a=>a.pause());
+    const firstEval = lns.findIndex(l=>l.querySelector('[data-count]'));
+    return () => { anims.forEach(a=>a.play()); setTimeout(()=>this.countUp(run.querySelector('dl')), firstEval*gap); }; }
+  // Experience: "thinking", then each bullet streams in word by word like LLM output.
+  streamExp(){ const box = document.querySelector('[data-exp]'); if (!box) return; const T = 700, W = 14;
+    const [a, b] = box.querySelectorAll('[data-think] > span');
+    a.animate([{opacity:1},{opacity:.35},{opacity:1}],{duration:T/2, iterations:2}); b.animate([{opacity:0},{opacity:1}],{duration:300, delay:T, fill:'backwards'});
+    let t = T;
+    box.querySelectorAll('[data-pt]').forEach(li=>{ const n = textOf(li.lastElementChild); if (!n) return; const full = n.nodeValue, words = full.split(' '), t0 = t; t += words.length*W;
+      n.nodeValue = ''; li.animate([{opacity:0},{opacity:1}],{duration:150, delay:t0, fill:'backwards'});
+      setTimeout(()=>{ const s0 = performance.now(); const step = now => { if (!n.isConnected) return; const k = Math.min(words.length, Math.floor((now-s0)/W)+1); n.nodeValue = k>=words.length ? full : words.slice(0,k).join(' ')+' ▌'; if (k<words.length) requestAnimationFrame(step); }; requestAnimationFrame(step); }, t0); });
+    box.querySelectorAll('[data-after]').forEach(el=>el.animate([{opacity:0},{opacity:1}],{duration:400, delay:t, fill:'backwards'})); }
+  countUp(root){ if (!root || this.motion()==='off') return; root.querySelectorAll('[data-count]').forEach((el,i)=>{ const n = textOf(el); if (!n) return; const final = n.nodeValue; const m = final.match(/^([^\d]*)([\d.,]+)(.*)$/); if (!m) return; const num = parseFloat(m[2].replace(/,/g,'')), dec = (m[2].split('.')[1]||'').length; const t0 = performance.now()+350+i*120, dur = 1400; const step = now => { if (!n.isConnected) return; const p = Math.max(0, Math.min(1, (now-t0)/dur)); n.nodeValue = p>=1 ? final : m[1] + (num*ease(p)).toFixed(dec) + m[3]; if (p<1) requestAnimationFrame(step); }; n.nodeValue = m[1] + (0).toFixed(dec) + m[3]; requestAnimationFrame(step); }); }
   tlRef = React.createRef(); tlBarRef = React.createRef(); detailRef = React.createRef(); palInput = React.createRef();
   fieldRef = React.createRef(); codeRef = React.createRef(); marqRef = React.createRef(); navWrap = React.createRef(); navInd = React.createRef(); progRef = React.createRef(); caretRef = React.createRef(); liveDot = React.createRef(); repoGrid = React.createRef(); pubRef = React.createRef();
 
@@ -1020,7 +1058,7 @@ class Component extends DCLogic {
     if (pp.motion !== this.props.motion || pp.background !== this.props.background){ this.loop(); }
     if (!ps.palOpen && this.state.palOpen){ this.palReturn = document.activeElement; let n=0; const f=()=>{ const el=this.palInput.current; if (el){ el.focus(); if (document.activeElement===el) return; } if (++n<20) requestAnimationFrame(f); }; requestAnimationFrame(f); }
     if (ps.palOpen && !this.state.palOpen && this.palReturn && this.palReturn.focus) this.palReturn.focus();
-    if (ps.openExp !== this.state.openExp && this.motion()!=='off'){ document.querySelectorAll('[data-exp] [data-pt]').forEach((el,i)=> el.animate([{opacity:0,transform:'translateX(-10px)'},{opacity:1,transform:'none'}],{duration:500,delay:i*70,easing:'cubic-bezier(.2,.7,.1,1)',fill:'backwards'})); }
+    if (ps.openExp !== this.state.openExp && this.motion()!=='off') this.streamExp();
     if (ps.pub !== this.state.pub && this.pubRef.current && this.motion()!=='off'){ this.pubRef.current.animate([{opacity:.2,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:500,easing:'cubic-bezier(.2,.7,.1,1)'}); this.drawPaths(this.pubRef.current, 100); }
     if ((ps.cat !== this.state.cat || ps.page !== this.state.page) && this.motion()!=='off' && this.repoGrid.current){ this.repoGrid.current.querySelectorAll('[data-repo]').forEach((el,i)=> el.animate([{opacity:0,transform:'translateY(14px) scale(.98)'},{opacity:1,transform:'none'}],{duration:550,delay:i*45,easing:'cubic-bezier(.2,.7,.1,1)',fill:'backwards'})); }
     if (ps.active !== this.state.active || ps.wide !== this.state.wide) this.moveInd(this.navHover || this.state.active);
@@ -1271,7 +1309,7 @@ class Component extends DCLogic {
       scrollTo({top:0, behavior:'auto'});
       const el = this.detailRef.current;
       if (el && this.motion()!=='off'){ el.querySelectorAll('[data-d]').forEach((d,i)=> d.animate([{opacity:0,transform:'translateY(24px)',filter:'blur(6px)'},{opacity:1,transform:'none',filter:'blur(0)'}],{duration:900, delay:i*100, easing:'cubic-bezier(.2,.7,.1,1)', fill:'backwards'})); this.drawPaths(el, 300); const pl = el.querySelector('[data-pipe]'); pl && pl.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:1300,delay:300,easing:'cubic-bezier(.65,0,.35,1)',fill:'backwards'}); }
-      if (el){ if (this.cio) this.cio.disconnect(); const dl = el.querySelector('dl'); if (dl && 'IntersectionObserver' in window){ this.cio = new IntersectionObserver(es=>{ if (es[0].isIntersecting){ this.cio.disconnect(); this.countUp(dl); } }, {rootMargin:'0px 0px -10% 0px'}); this.cio.observe(dl); } }
+      if (el){ if (this.cio) this.cio.disconnect(); const run = el.querySelector('[data-run]'); if (run && this.motion()!=='off' && 'IntersectionObserver' in window){ const play = this.prepTrace(run); this.cio = new IntersectionObserver(es=>{ if (es[0].isIntersecting){ this.cio.disconnect(); play(); } }, {rootMargin:'0px 0px -15% 0px'}); this.cio.observe(run); } }
       this.setState({active:''});
     } else {
       document.title = 'Unnati Shah — AI Engineer';
@@ -1360,7 +1398,7 @@ class Component extends DCLogic {
       glow:h?1:0, lift:h?'-4px':'0px', dash:h?0:400, arrow:h?'3px,-3px':'0px,0px', linkColor:h?'var(--acc-ink)':'var(--mute)', border:h?'color-mix(in oklab,var(--acc) 50%,transparent)':'var(--line)'}; });
     const filters = CATS.map(c=>{ const o = s.cat===c; return {label:c, count: c==='All'?REPOS.length:REPOS.filter(r=>r.cat===c).length, on:o?'true':'false', pick:()=>this.setState({cat:c, page:0}), bg:o?'var(--ink)':'var(--card)', color:o?'var(--bg)':'var(--mute)', border:o?'var(--ink)':'var(--line2)'}; });
 
-    const exp = EXP.map((e,i)=>{ const o = s.openExp===i; return {...e, open:o, expanded:o?'true':'false', rot:o?'45deg':'0deg',
+    const exp = EXP.map((e,i)=>{ const o = s.openExp===i; return {...e, open:o, tok:Math.round(e.points.join(' ').length/4), expanded:o?'true':'false', rot:o?'45deg':'0deg',
       nodeFill:o?'var(--acc-ink)':'var(--bg)', nodeBorder:o?'var(--acc-ink)':'var(--line2)', nodeGlow:o?'0 0 0 5px color-mix(in oklab,var(--acc) 18%,transparent)':'none',
       toggle:()=>this.setState({openExp:o?-1:i}),
       links:e.rel.map(r=> r==='#research' ? {label:'Research', href:'#/research', go:this.nav('#/research')} : (p=>({label:'Case '+p.num+' · '+p.title, href:'#/work/'+p.slug, go:this.nav('#/work/'+p.slug)}))(PROJECTS.find(x=>x.slug===r)))
@@ -1374,7 +1412,8 @@ class Component extends DCLogic {
         decisions:p.decisions.map((t,i)=>({n:String(i+1).padStart(2,'0'),t})),
         diagHint:'Drawn from résumé descriptions · verify against implementation',
         stageNum: `${String(st+1).padStart(2,'0')} / ${String(p.stages.length).padStart(2,'0')}`, stageNote:p.stages[st].note,
-        stages:p.stages.map((x,i)=>({...x, on:i===st?'true':'false', pick:()=>this.setState({stage:i}),
+        stepCount:p.stages.length,
+        stages:p.stages.map((x,i)=>({...x, n:String(i+1).padStart(2,'0'), on:i===st?'true':'false', pick:()=>this.setState({stage:i}),
           border:i===st?'var(--acc-ink)':(p.kind==='hub'?'var(--line2)':'var(--ink)'), fill:i===st?'var(--acc-ink)':'var(--bg)', color:i===st?'var(--ink)':'var(--mute)'}))};
       cur.hub = {}; [0,1,2,3,4].forEach(i=>cur.hub['s'+i] = i===st ? 1 : 0);
       next = {num:n.num, title:n.title, href:'#/work/'+n.slug, open:this.nav('#/work/'+n.slug)};
