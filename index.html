@@ -28,6 +28,7 @@ button{font:inherit;color:inherit}
 ::selection{background:var(--acc);color:#070a0f}
 :focus-visible{outline:1px solid var(--acc-ink);outline-offset:3px}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+@media (max-width:640px){[data-ticker]{flex-direction:column}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </helmet>
@@ -158,8 +159,10 @@ button{font:inherit;color:inherit}
     </div>
   </header>
 
-  <div aria-hidden="true" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px clamp(20px,4vw,48px);background:color-mix(in oklab,var(--bg) 55%,transparent);display:flex;justify-content:center;font-family:'Space Mono',monospace;font-size:13px;line-height:1.4;white-space:nowrap;overflow:hidden">
-    <span style="color:var(--mute)">unnati specializes in&nbsp;</span><span ref="{{ marqRef }}" style="display:inline-flex;align-items:center;min-width:0"><span style="color:var(--ink)"></span><span style="color:var(--faint)"></span><span style="margin-left:10px;padding:1px 6px;border:1px solid var(--line2);border-radius:4px;font-size:10px;color:var(--faint);opacity:0;transition:opacity .25s">Tab ⇥</span></span>
+  <div aria-hidden="true" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:color-mix(in oklab,var(--bg) 55%,transparent)">
+    <div data-ticker="1" style="max-width:1280px;margin:0 auto;padding:18px clamp(20px,4vw,48px);display:flex;gap:6px 10px;font-family:'Space Mono',monospace;font-size:13px;line-height:1.4;white-space:nowrap">
+      <span style="color:var(--mute)">unnati specializes in</span><span ref="{{ marqRef }}" style="display:inline-flex;align-items:center;min-width:0"><span style="color:var(--ink)"></span><span style="color:var(--faint)"></span><span style="margin-left:10px;padding:1px 6px;border:1px solid var(--line2);border-radius:4px;font-size:10px;color:var(--faint);opacity:0;transition:opacity .25s">Tab ⇥</span></span>
+    </div>
   </div>
 
   <section id="sec-work" aria-labelledby="h-work" style="max-width:1280px;margin:0 auto;padding:clamp(72px,12vh,140px) clamp(20px,4vw,48px) clamp(48px,8vh,96px)">
