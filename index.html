@@ -259,20 +259,9 @@ button{font:inherit;color:inherit}
     <div data-reveal="1" style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px">
       <div style="display:flex;flex-direction:column;gap:14px">
         <span data-scr="1" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc-ink)">02 // Projects</span>
-        <h2 id="h-proj-list" style="margin:0;font-weight:500;font-size:clamp(40px,5.4vw,76px);letter-spacing:-.045em;line-height:.95">Open source</h2>
+        <h2 id="h-proj-list" style="margin:0;font-weight:500;font-size:clamp(40px,5.4vw,76px);letter-spacing:-.045em;line-height:.95">Live projects</h2>
       </div>
       <a href="https://github.com/unnatibshah?tab=repositories" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--mute);padding:4px 0;background:linear-gradient(var(--acc-ink),var(--acc-ink)) 0 100%/0% 1px no-repeat;transition:background-size .4s cubic-bezier(.2,.7,.1,1),color .3s" style-hover="background-size:100% 1px">All 30 repositories on GitHub ↗</a>
-    </div>
-    <div data-reveal="1" style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:28px">
-      <div role="tablist" aria-label="Filter projects" style="display:flex;gap:8px;flex-wrap:wrap">
-        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
-          <button type="button" role="tab" aria-selected="{{ f.on }}" onClick="{{ f.pick }}" style="display:flex;gap:8px;align-items:center;background:{{ f.bg }};color:{{ f.color }};border:1px solid {{ f.border }};border-radius:999px;padding:8px 14px;font-size:13px;cursor:pointer;transition:all .3s">{{ f.label }}<span style="font-family:'Space Mono',monospace;font-size:10px;opacity:.7">{{ f.count }}</span></button>
-        </sc-for>
-      </div>
-      <label style="display:flex;align-items:center;gap:10px;border:1px solid var(--line2);border-radius:999px;padding:8px 14px;background:var(--card);min-width:min(100%,260px)">
-        <span aria-hidden="true" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--acc-ink)">/</span>
-        <input value="{{ rq }}" onChange="{{ onRq }}" placeholder="Search repositories" aria-label="Search repositories" style="flex:1;min-width:0;background:none;border:0;outline:none;font-family:'Space Mono',monospace;font-size:12px;color:var(--ink)">
-      </label>
     </div>
     <div ref="{{ repoGrid }}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:14px">
       <sc-for list="{{ repos }}" as="r" hint-placeholder-count="6">
@@ -280,7 +269,7 @@ button{font:inherit;color:inherit}
           <span aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(360px circle at var(--mx,50%) var(--my,0%),color-mix(in oklab,var(--acc) 16%,transparent),transparent 65%);opacity:{{ r.glow }};transition:opacity .4s"></span>
           <span style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)">
             <span style="display:flex;align-items:center;gap:8px"><span aria-hidden="true" style="color:var(--acc-ink)">{ }</span>{{ r.cat }}</span>
-            <sc-if value="{{ r.pinned }}" hint-placeholder-val="{{ false }}"><span style="color:var(--acc2);border:1px solid color-mix(in oklab,var(--acc2) 45%,transparent);border-radius:4px;padding:2px 6px">Pinned</span></sc-if>
+            <sc-if value="{{ r.pinned }}" hint-placeholder-val="{{ false }}"><span style="color:var(--acc2);border:1px solid color-mix(in oklab,var(--acc2) 45%,transparent);border-radius:4px;padding:2px 6px;white-space:nowrap">● Live</span></sc-if>
           </span>
           <span style="position:relative;font-family:'Space Mono',monospace;font-size:15px;font-weight:700;line-height:1.35;overflow-wrap:anywhere">{{ r.name }}</span>
           <span style="position:relative;font-size:14px;line-height:1.55;color:var(--mute);text-wrap:pretty;flex:1">{{ r.desc }}</span>
@@ -294,25 +283,10 @@ button{font:inherit;color:inherit}
             </sc-for>
           </span>
           <span style="position:relative;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;font-family:'Space Mono',monospace;font-size:11px;color:{{ r.linkColor }};transition:color .3s">
-            <span>Open on GitHub</span><span style="transform:translate({{ r.arrow }});transition:transform .4s cubic-bezier(.3,.9,.2,1)">↗</span>
+            <span>Open live demo</span><span style="transform:translate({{ r.arrow }});transition:transform .4s cubic-bezier(.3,.9,.2,1)">↗</span>
           </span>
         </a>
       </sc-for>
-    </div>
-  <sc-if value="{{ repoEmpty }}" hint-placeholder-val="{{ false }}">
-      <p style="margin:0;padding:40px 0;text-align:center;font-family:'Space Mono',monospace;font-size:12px;color:var(--faint)">No repositories match.</p>
-    </sc-if>
-    <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
-      <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--mute)">{{ pageInfo }}</span>
-      <sc-if value="{{ multiPage }}" hint-placeholder-val="{{ true }}">
-        <nav aria-label="Project pages" style="display:flex;align-items:center;gap:6px">
-          <button type="button" onClick="{{ prevPage }}" disabled="{{ atFirst }}" aria-label="Previous page" style="width:38px;height:38px;border-radius:50%;border:1px solid var(--line2);background:var(--card);cursor:pointer;opacity:{{ prevOp }};transition:border-color .3s,opacity .3s" style-hover="border-color:var(--acc-ink)">←</button>
-          <sc-for list="{{ pageBtns }}" as="pg" hint-placeholder-count="2">
-            <button type="button" onClick="{{ pg.go }}" aria-current="{{ pg.cur }}" aria-label="{{ pg.aria }}" style="min-width:38px;height:38px;border-radius:999px;border:1px solid {{ pg.border }};background:{{ pg.bg }};color:{{ pg.color }};cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;transition:all .3s">{{ pg.label }}</button>
-          </sc-for>
-          <button type="button" onClick="{{ nextPage }}" disabled="{{ atLast }}" aria-label="Next page" style="width:38px;height:38px;border-radius:50%;border:1px solid var(--line2);background:var(--card);cursor:pointer;opacity:{{ nextOp }};transition:border-color .3s,opacity .3s" style-hover="border-color:var(--acc-ink)">→</button>
-        </nav>
-      </sc-if>
     </div>
   </section>
 
@@ -819,20 +793,10 @@ PROJECTS.forEach((p,i)=>{ p.num=String(i+1).padStart(2,'0'); });
 
 const GH = 'https://github.com/unnatibshah/';
 const REPOS = [
-  {name:'Fake-News-Detection', cat:'AI & NLP', pinned:true, desc:'Uses the LIAR dataset of real-life political statements to identify instances of fake news.', tags:['NLP','LIAR dataset']},
-  {name:'Image-Caption-Generator', cat:'AI & NLP', pinned:true, desc:'Python deep learning model combining CNNs and LSTM to generate captions for images.', tags:['Python','CNN','LSTM']},
-  {name:'Powered-by-Sun', cat:'Machine learning', pinned:true, desc:'Machine learning to forecast solar power throughput, with cost and size calculation.', tags:['Forecasting','Solar']},
-  {name:'Archery-game', cat:'Systems & graphics', pinned:true, desc:'Computer graphics project: an archery game written in C.', tags:['C','Graphics']},
-  {name:'CSCI544-NLP', cat:'AI & NLP', desc:'Applied NLP at USC (Spring 2023): sentiment analysis, sequence labeling, HMM/Viterbi, seq2seq, and transformers.', tags:['PyTorch','Transformers','USC']},
-  {name:'Decision-Trees-as-Interpretable-Models', cat:'Machine learning', desc:'Builds and plots a decision tree, converts its rules to IF-THEN form, and applies cost-complexity pruning.', tags:['Interpretability','Pruning']},
-  {name:'KNN-on-Vertebral-Column-Data-Set', cat:'Machine learning', desc:'KNN classification compared across Manhattan, Mahalanobis, Minkowski, and Chebyshev distances.', tags:['Jupyter','KNN']},
-  {name:'Time-Series-Classification-Part1', cat:'Machine learning', desc:'Feature creation and extraction from wireless sensor network time series to classify human activities.', tags:['Time series','AReM']},
-  {name:'Time-Series-Classification-Part2', cat:'Machine learning', desc:'Binary and multiclass activity classification with logistic regression, L1 regularization, and Naive Bayes.', tags:['ROC-AUC','Naive Bayes']},
-  {name:'CSCI585-Databases', cat:'Systems & graphics', desc:'Database Systems at USC (Fall 2022): SQL, NoSQL, MapReduce, and spatial data.', tags:['SQL','NoSQL','USC']},
-  {name:'Registration-Form-with-database-connectivity', cat:'Systems & graphics', desc:'Summer camp registration form built as a Java applet with Apache Derby.', tags:['Java','Apache Derby']}
+  {name:'SwipeWise', cat:'Fintech', pinned:true, demo:'https://credit-portfolio-1.onrender.com', desc:'Deterministic credit card rewards optimization: route each swipe to the best card and optimize a whole portfolio, with every dollar auditable to the issuer terms.', tags:['Python','FastAPI','Integer micro-cent math']}
 ];
 const hash = s => { let h=2166136261; for (const c of s){ h^=c.charCodeAt(0); h=Math.imul(h,16777619); } return h>>>0; };
-REPOS.forEach(r=>{ r.url = GH + r.name; let h = hash(r.name); const pts=[]; for (let i=0;i<=12;i++){ h = Math.imul(h ^ (h>>>15), 2246822507)>>>0; pts.push(`${(i/12*200).toFixed(1)},${(4 + (h%240)/10).toFixed(1)}`); } r.spark = pts.join(' '); });
+REPOS.forEach(r=>{ r.url = r.demo || GH + r.name; let h = hash(r.name); const pts=[]; for (let i=0;i<=12;i++){ h = Math.imul(h ^ (h>>>15), 2246822507)>>>0; pts.push(`${(i/12*200).toFixed(1)},${(4 + (h%240)/10).toFixed(1)}`); } r.spark = pts.join(' '); });
 const CATS = ['All','AI & NLP','Machine learning','Systems & graphics'];
 const PAGE = 6;
 const PUBS = [
@@ -909,7 +873,7 @@ const SKILLS = [
   ['Cloud & DevOps', ['Azure AI','Azure Functions','AWS (S3, Lambda, Sagemaker, Bedrock)','GCP','Docker','Kubernetes','Git','CI/CD']]
 ];
 const SKILL_CASES = {'Multi-Agent Orchestration':['multi-agent-routing'],'Agentic Evaluation':['eval-llmops'],'Model Context Protocol':['multi-agent-routing'],'Fine-tuning (LoRA, QLoRA)':['enterprise-rag'],'Token Optimization':['eval-llmops','text-to-sql'],'Vector Databases (Chroma, Qdrant, pgvector)':['graph-retrieval','enterprise-rag','text-to-sql'],'Telemetry':['eval-llmops'],'RAG':['enterprise-rag'],'GraphRAG (Neo4j)':['graph-retrieval'],'LangGraph':['multi-agent-routing'],'A2A':['multi-agent-routing'],'Azure AI':['enterprise-rag'],'AWS (S3, Lambda, Sagemaker, Bedrock)':['enterprise-rag'],'SQL':['text-to-sql']};
-const SKILL_REPOS = {'Python':['Image-Caption-Generator'],'PyTorch':['CSCI544-NLP'],'SQL':['CSCI585-Databases'],'Java':['Registration-Form-with-database-connectivity']};
+const SKILL_REPOS = {};
 const CERTS = [
   {n:'Microsoft Azure Fundamentals: Describe cloud concepts', issuer:'Microsoft', date:'Nov 2023', logo:'assets/cert-ms.png', href:''},
   {n:'Applied Data Science with Python - Level 2', issuer:'IBM', date:'Jun 2021', logo:'assets/cert-ibm.png', href:''},
@@ -949,7 +913,7 @@ class Component extends DCLogic {
     PUBS.forEach(p=>L.push('PUBLICATION: '+p.title+', '+p.venue+' '+p.year+'. '+p.body));
     L.push('EDUCATION: M.S. Computer Science, University of Southern California (2022–2024), Graduate Research Assistant and Graduate Teaching Assistant for BUAD 310g Applied Business Statistics.');
     L.push('CERTIFICATIONS: '+CERTS.map(c=>c.n+' ('+c.issuer+', '+c.date+')').join('; ')+'.');
-    L.push('OPEN-SOURCE REPOS: '+REPOS.map(r=>r.name+': '+r.desc).join(' | '));
+    L.push('LIVE PROJECTS (deployed demos): '+REPOS.map(r=>r.name+' ('+r.url+'): '+r.desc).join(' | '));
     return this._kb = L.join('\n'); }
   openAgent = () => { this.closePal(); this.setState({agentOpen:true}); };
   closeAgent = () => { if (!this.state.agentOpen) return; const el = this.agentRef.current; const done = () => { this.askId = (this.askId||0)+1; clearInterval(this.trT); this.setState({agentOpen:false, msgs:[], aq:'', thinking:false, trace:0}); }; if (el && this.motion()!=='off' && !document.hidden){ let fired=false; const d=()=>{ if(fired) return; fired=true; done(); }; const a = el.animate([{transform:'none',opacity:1},{transform:'translateX(24px)',opacity:0}],{duration:220,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'}); a.onfinish = d; setTimeout(d, 300); } else done(); };
@@ -1338,7 +1302,7 @@ class Component extends DCLogic {
     const c = SECTIONS.map(([id,l])=>({label:l, kind:'Section', run:()=>this.go('#/'+id)}));
     PROJECTS.forEach(p=>c.push({label:p.title, kind:'Case '+p.num, run:()=>this.go('#/work/'+p.slug)}));
     PUBS.forEach((p,i)=>c.push({label:p.short, kind:'Paper', run:()=>{ this.setState({pub:i}); this.go('#/research'); }}));
-    REPOS.forEach(r=>c.push({label:r.name, kind:'Repo ↗', run:()=>{this.closePal(); open(r.url,'_blank');}}));
+    REPOS.forEach(r=>c.push({label:r.name, kind:'Live demo ↗', run:()=>{this.closePal(); open(r.url,'_blank');}}));
     c.push({label:this.state.theme==='dark'?'Switch to light theme':'Switch to dark theme', kind:'Action', run:()=>{this.closePal(); this.toggleTheme();}});
     c.push({label:'Ask my agent', kind:'Action', run:()=>this.openAgent()});
     c.push({label:'Replay intro', kind:'Action', run:()=>this.replayIntro()});
