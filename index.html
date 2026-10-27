@@ -793,6 +793,7 @@ PROJECTS.forEach((p,i)=>{ p.num=String(i+1).padStart(2,'0'); });
 
 const GH = 'https://github.com/unnatibshah/';
 const REPOS = [
+  {name:'embedding-playground', cat:'AI & NLP', pinned:true, demo:'https://unnatibshah.github.io/embedding-playground/', desc:'Same query, three models: compare how open embedding models rank the same documents, live in your browser, with scores, latency and where they disagree.', tags:['Embeddings','transformers.js','ONNX']},
   {name:'SwipeWise', cat:'Fintech', pinned:true, demo:'https://credit-portfolio-1.onrender.com', desc:'Deterministic credit card rewards optimization: route each swipe to the best card and optimize a whole portfolio, with every dollar auditable to the issuer terms.', tags:['Python','FastAPI','Integer micro-cent math']}
 ];
 const hash = s => { let h=2166136261; for (const c of s){ h^=c.charCodeAt(0); h=Math.imul(h,16777619); } return h>>>0; };
