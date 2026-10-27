@@ -1,0 +1,12 @@
+name = "unnati-agent"
+main = "index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+MODEL = "openai/gpt-oss-120b"
+
+# 10 questions per minute per visitor IP
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }

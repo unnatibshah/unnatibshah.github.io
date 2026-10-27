@@ -855,6 +855,14 @@ const NODES = {
 };
 const BOOT = [['init','unnati.agent','v2026'],['load','router · LangGraph','ok'],['link','agents · A2A','ok'],['mount','tools · MCP','ok'],['warm','retrieval · Neo4j + Qdrant','ok'],['attach','telemetry · OpenTelemetry','ok'],['serve','portfolio','ready']];
 const AGENT_SUGS = ['What does Unnati build at Johnson & Johnson?','Which project best shows her evaluation work?','What was her research at USC about?','What is her experience with RAG?'];
+const AGENT_URL = 'https://unnati-agent.unnatibshah.workers.dev';
+// Instant answers for the suggested questions; anything else goes to AGENT_URL.
+const AGENT_CANNED = {
+  'What does Unnati build at Johnson & Johnson?': "Unnati is an AI Engineer at Johnson & Johnson, where she architected a stateful multi-agent system with A2A, LangGraph and Model Context Protocol that routes 50K+ daily queries at 96% intent classification accuracy. She also engineered a low-latency graph retrieval system on Neo4j and Qdrant, improving search relevance by 20% and cutting vector lookup latency by 33%, and built an OpenTelemetry evaluation framework that reduced QA/evaluation cycles by 81%.",
+  'Which project best shows her evaluation work?': "Case study 03, Evaluation and LLM operations at Johnson & Johnson. Unnati built a production-grade evaluation framework with OpenTelemetry to monitor latency and drift, automated regression testing that reduced QA/evaluation cycles by 81%, and an LLM-as-a-judge benchmark with Claude Sonnet 3.5 measuring faithfulness, precision and answer relevancy, which standardized deployment criteria across 8+ business units.",
+  'What was her research at USC about?': "As a Machine Learning Researcher at USC (2022–2024), Unnati built the data pipelines for a Strategic Management Journal study on how synergies in acquisitions deter entry in Apple's iOS App Store. She mined 71M+ user reviews to quantify economies of scope, linked 279,000+ developer profiles to acquisition data at 99% accuracy with fuzzy matching, and built SDK-to-Category sparse matrices for 12,000+ software kits.",
+  'What is her experience with RAG?': "At Johnson & Johnson, Unnati scaled a RAG system on Azure OpenAI, Bedrock, DynamoDB and Qdrant to 100K+ documents and 50K+ daily queries, reaching 96% relevance through multi-query retrieval and context compression. She also designed a hybrid LLM/rule-based parser that unlocked 100K+ Excel and PPT documents, boosting retrieval precision by 28%, and at C3.ai migrated a retrieval stack from ColBERT to pgvector with HNSW, scaling to 2M+ records with 40% higher throughput.",
+};
 const AGENT_LINKS = [['multi-agent-routing',/langgraph|a2a|multi-agent|intent routing|model context/i],['graph-retrieval',/neo4j|multi-hop|graph retrieval/i],['eval-llmops',/opentelemetry|llm-as-a-judge|regression|evaluation framework/i],['enterprise-rag',/\bRAG\b|mistral|qlora|100K\+ documents/i],['text-to-sql',/text.to.sql|gbnf|c3\.ai|llama 3/i]];
 const GHOST = [
 '$ git log --reverse unnati/life','',
@@ -947,10 +955,13 @@ class Component extends DCLogic {
     clearInterval(this.trT); this.trT = setInterval(()=>this.setState(s=>({trace:Math.min(s.trace+1,2)})), 650);
     let text;
     try {
-      if (!window.claude || !window.claude.complete) throw new Error('unavailable');
-      text = await window.claude.complete({ max_tokens: 400,
-        system: 'You are unnati.agent, the assistant on Unnati Shah\'s portfolio site. Answer visitor questions about Unnati using ONLY the facts below. Refer to her as Unnati or she. Be concise: 2 to 4 sentences, plain text, no markdown, no bullet lists. Quote numbers exactly as written. If the facts do not cover the question, say you do not have that information and suggest emailing unnatishah.ix@gmail.com. Politely decline unrelated requests.\n\nFACTS:\n' + this.kb(),
-        messages: msgs.slice(-8).map(m=>({role:m.role==='user'?'user':'assistant', content:m.text})) });
+      if (AGENT_CANNED[q]) text = AGENT_CANNED[q];
+      else {
+        const r = await fetch(AGENT_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ messages: msgs.slice(-8).map(m=>({role:m.role==='user'?'user':'assistant', content:m.text})) }) });
+        if (r.status === 429) { text = 'Too many questions at once. Give it a minute and try again.'; }
+        else { if (!r.ok) throw new Error('agent ' + r.status); text = (await r.json()).text; }
+      }
     } catch(e){ text = 'The agent is unavailable right now. You can reach Unnati at unnatishah.ix@gmail.com.'; }
     if (id !== this.askId) return;
     clearInterval(this.trT);
