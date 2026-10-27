@@ -604,7 +604,7 @@ button{font:inherit;color:inherit}
       <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Challenges &amp; trade-offs</span>
       <p style="grid-column:span 3;margin:0;padding:16px 18px;border:1px dashed var(--line2);border-radius:6px;font-family:'Space Mono',monospace;font-size:12px;line-height:1.6;color:var(--faint);max-width:48rem">Not covered in the résumé. Add your own notes here: what was hard, what you chose against, and why.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
       <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Outcomes</span>
       <dl style="grid-column:span 3;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:28px 32px">
         <sc-for list="{{ cur.outcomes }}" as="o" hint-placeholder-count="3">
@@ -615,13 +615,6 @@ button{font:inherit;color:inherit}
         </sc-for>
       </dl>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 48px;padding:32px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-      <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)">Links</span>
-      <div style="grid-column:span 3;display:flex;gap:10px;flex-wrap:wrap">
-        <span style="border:1px dashed var(--line2);border-radius:999px;padding:8px 14px;font-family:'Space Mono',monospace;font-size:12px;color:var(--faint)">Repository · add link</span>
-        <span style="border:1px dashed var(--line2);border-radius:999px;padding:8px 14px;font-family:'Space Mono',monospace;font-size:12px;color:var(--faint)">Demo · add link</span>
-        <span style="border:1px dashed var(--line2);border-radius:999px;padding:8px 14px;font-family:'Space Mono',monospace;font-size:12px;color:var(--faint)">Docs · add link</span>
-      </div>
     </div>
   </div>
   <a href="{{ next.href }}" onClick="{{ next.open }}" style="margin-top:72px;display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;color:var(--ink)" style-hover="color:var(--acc-ink)">
