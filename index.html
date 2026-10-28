@@ -228,27 +228,33 @@ button{font:inherit;color:inherit}
       </svg>
     </div>
 
-    <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px">
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:14px">
       <sc-for list="{{ projects }}" as="p" hint-placeholder-count="5">
-        <li data-reveal="1">
-          <a href="{{ p.href }}" onClick="{{ p.open }}" onMouseMove="{{ spot }}" onMouseEnter="{{ p.enter }}" onMouseLeave="{{ p.leave }}" onFocus="{{ p.enter }}" onBlur="{{ p.leave }}" style="position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px 40px;padding:28px clamp(18px,2.4vw,32px);align-items:center;color:var(--ink);border:1px solid {{ p.border }};border-radius:12px;background:var(--card);transition:border-color .4s">
-            <span aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),color-mix(in oklab,var(--acc) 14%,transparent),transparent 65%);opacity:{{ p.glow }};transition:opacity .4s"></span>
-            <div style="position:relative;display:flex;gap:20px;align-items:baseline;grid-column:span 2;min-width:0">
-              <span style="font-family:'Space Mono',monospace;font-size:12px;color:{{ p.numColor }};transition:color .3s">{{ p.num }}</span>
-              <span style="display:flex;flex-direction:column;gap:8px;min-width:0">
-                <span style="font-size:clamp(22px,2.4vw,32px);letter-spacing:-.025em;line-height:1.12;transform:translateX({{ p.shift }});transition:transform .5s cubic-bezier(.2,.7,.1,1)">{{ p.title }}</span>
-                <span style="font-size:14px;color:var(--mute)">{{ p.org }} · {{ p.years }}</span>
-              </span>
-            </div>
-            <div style="position:relative;display:flex;flex-direction:column;gap:12px">
-              <span style="display:flex;align-items:center;gap:6px" aria-hidden="true">
-                <sc-for list="{{ p.dots }}" as="d" hint-placeholder-count="5">
-                  <span style="display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;border:1px solid {{ d.border }};background:{{ d.fill }};box-shadow:{{ d.glow }};transition:all .3s;transition-delay:{{ d.delay }}"></span><span style="width:16px;height:1px;background:{{ d.line }};transition:background-color .3s;transition-delay:{{ d.delay }}"></span></span>
-                </sc-for>
-                <span style="margin-left:auto;font-family:'Space Mono',monospace;font-size:16px;color:var(--acc-ink);transform:translateX({{ p.arrow }});opacity:{{ p.glow }};transition:all .4s">→</span>
-              </span>
-              <span style="font-family:'Space Mono',monospace;font-size:11px;line-height:1.5;color:var(--mute)">{{ p.stack }}</span>
-            </div>
+        <li data-reveal="1" style="grid-column:{{ p.span }};display:flex">
+          <a href="{{ p.href }}" onClick="{{ p.open }}" onMouseMove="{{ spot }}" onMouseEnter="{{ p.enter }}" onMouseLeave="{{ p.leave }}" onFocus="{{ p.enter }}" onBlur="{{ p.leave }}" aria-label="Read case study: {{ p.title }}" style="position:relative;overflow:hidden;flex:1;display:flex;flex-direction:column;gap:14px;padding:22px clamp(18px,2vw,26px) 18px;color:var(--ink);border:1px solid {{ p.border }};border-radius:14px;background:var(--card);cursor:pointer;transform:translateY({{ p.lift }});box-shadow:{{ p.shadow }};transition:transform .45s cubic-bezier(.3,.9,.2,1),border-color .35s,box-shadow .45s">
+            <span aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),color-mix(in oklab,var(--acc) 13%,transparent),transparent 65%);opacity:{{ p.glow }};transition:opacity .4s"></span>
+            <span style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:'Space Mono',monospace;font-size:11px;color:var(--mute)">
+              <span><span style="color:{{ p.numColor }};transition:color .3s">{{ p.num }}</span> · {{ p.org }} · {{ p.years }}</span>
+              <span style="letter-spacing:.06em;text-transform:uppercase;color:var(--acc-ink);border:1px solid color-mix(in oklab,var(--acc) 35%,transparent);border-radius:999px;padding:2px 8px;font-size:9.5px;white-space:nowrap">case study</span>
+            </span>
+            <span style="position:relative;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:clamp(20px,1.9vw,26px);letter-spacing:-.025em;line-height:1.15">{{ p.title }}</span>
+              <span style="font-size:14px;line-height:1.5;color:var(--mute);text-wrap:pretty">{{ p.problem }}</span>
+            </span>
+            <span style="position:relative;display:flex;gap:28px;flex-wrap:wrap">
+              <sc-for list="{{ p.metrics }}" as="m" hint-placeholder-count="2">
+                <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="font-size:clamp(24px,2.2vw,30px);font-weight:500;letter-spacing:-.03em;line-height:1;color:var(--acc-ink);font-variant-numeric:tabular-nums">{{ m.v }}</span><span style="font-size:12px;color:var(--mute);max-width:16rem">{{ m.l }}</span></span>
+              </sc-for>
+            </span>
+            <span aria-hidden="true" style="position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px 4px;font-family:'Space Mono',monospace;font-size:10.5px">
+              <sc-for list="{{ p.flow }}" as="f" hint-placeholder-count="5">
+                <span style="display:inline-flex;align-items:center;gap:4px"><span style="border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.color }};border-radius:6px;padding:3px 7px;transition:all .3s;transition-delay:{{ f.delay }}">{{ f.label }}</span><span style="color:var(--faint)">{{ f.sep }}</span></span>
+              </sc-for>
+            </span>
+            <span style="position:relative;margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:12px;border-top:1px dashed var(--line2)">
+              <span style="font-family:'Space Mono',monospace;font-size:10.5px;color:var(--mute);min-width:0">{{ p.stack }}</span>
+              <span style="display:inline-flex;align-items:center;gap:8px;white-space:nowrap;font-size:13px;font-weight:500;color:var(--acc-ink)">Read case study<span style="display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:{{ p.ctaBg }};color:{{ p.ctaColor }};transform:translateX({{ p.ctaShift }});transition:all .35s cubic-bezier(.3,.9,.2,1)">→</span></span>
+            </span>
           </a>
         </li>
       </sc-for>
@@ -1329,10 +1335,14 @@ class Component extends DCLogic {
     const nc = s.node ? NODES[s.node] : null;
 
     const projects = PROJECTS.map((p,i)=>{ const h = s.row===i; return {
-      num:p.num, title:p.title, org:p.org, years:p.years, href:'#/work/'+p.slug, stack:p.stack.join(' · '),
+      num:p.num, title:p.title, org:p.org, years:p.years, href:'#/work/'+p.slug, stack:p.stack.join(' · '), problem:p.problem,
       open:this.nav('#/work/'+p.slug), enter:()=>this.setState({row:i}), leave:()=>this.setState(st=>st.row===i?{row:-1}:null),
-      numColor: h?'var(--acc-ink)':'var(--mute)', shift: h?'10px':'0px', glow: h?1:0, arrow: h?'0px':'-8px', border: h?'color-mix(in oklab,var(--acc) 50%,transparent)':'var(--line)',
-      dots: p.stages.map((_,j)=>({border:h?'var(--acc-ink)':'var(--line2)', fill:h?'var(--acc-ink)':'transparent', glow:h?'0 0 0 3px color-mix(in oklab,var(--acc) 20%,transparent)':'none', line: j===p.stages.length-1 ? 'transparent' : (h?'var(--acc-ink)':'var(--line2)'), delay:(h?j*80:0)+'ms'}))
+      span: i===0 ? '1 / -1' : 'auto', metrics: p.outcomes.slice(0,2),
+      numColor: h?'var(--acc-ink)':'var(--mute)', glow: h?1:0, lift: h?'-3px':'0px', shadow: h?'0 14px 34px -18px color-mix(in oklab,var(--acc) 45%,transparent)':'none',
+      border: h?'color-mix(in oklab,var(--acc) 50%,transparent)':'var(--line)',
+      ctaBg: h?'var(--acc-ink)':'color-mix(in oklab,var(--acc) 12%,transparent)', ctaColor: h?'var(--bg)':'var(--acc-ink)', ctaShift: h?'4px':'0px',
+      flow: p.stages.map((st,j)=>({label:st.label, sep: j<p.stages.length-1?'→':'', delay:(h?j*70:0)+'ms',
+        border: h?'color-mix(in oklab,var(--acc) 45%,transparent)':'var(--line2)', bg: h?'color-mix(in oklab,var(--acc) 9%,transparent)':'transparent', color: h?'var(--ink)':'var(--mute)'}))
     };});
 
     const rq = s.rq.trim().toLowerCase();
