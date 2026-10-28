@@ -1018,7 +1018,7 @@ class Component extends DCLogic {
     addEventListener('resize', this.onResize);
     this.onScroll = () => this.scrollFx();
     addEventListener('scroll', this.onScroll, {passive:true});
-    this.onMouse = e => { this.mouse = {x:e.clientX, y:e.clientY}; const C = this.code; if (C && (this.props.background ?? 'code') === 'code'){ const t = e.target; const plain = !(t.closest && t.closest('a,button,input,[role=dialog],[role=button],p,h1,h2,h3,li,dl,figure,article')); const near = plain && (C.bots.some(b=>Math.hypot(b.x - e.clientX, b.y - e.clientY) < 26) || C.lines.some(l=>e.clientX >= l.x && e.clientX <= l.x + l.w && e.clientY >= l.y - 14 && e.clientY <= l.y + 6)); const want = near ? 'pointer' : ''; if (this._cur !== want){ this._cur = want; document.documentElement.style.cursor = want; } } };
+    this.onMouse = e => { this.mouse = {x:e.clientX, y:e.clientY}; const tg = e.target; this.overText = !!(tg.closest && tg.closest('p,li,h1,h2,h3,h4,dl,dd,dt,table,pre,blockquote,figure,article,a,button,input,label,[data-exp],[data-run],[data-repo],[role=dialog],aside,form')); const C = this.code; if (C && (this.props.background ?? 'code') === 'code'){ const t = e.target; const plain = !(t.closest && t.closest('a,button,input,[role=dialog],[role=button],p,h1,h2,h3,li,dl,figure,article')); const near = plain && (C.bots.some(b=>Math.hypot(b.x - e.clientX, b.y - e.clientY) < 26) || C.lines.some(l=>e.clientX >= l.x && e.clientX <= l.x + l.w && e.clientY >= l.y - 14 && e.clientY <= l.y + 6)); const want = near ? 'pointer' : ''; if (this._cur !== want){ this._cur = want; document.documentElement.style.cursor = want; } } };
     this.onDown = e => { if (e.target.closest && e.target.closest('a,button,input,svg,[role=dialog]')) return; this.burst(e.clientX, e.clientY); };
     addEventListener('mousemove', this.onMouse, {passive:true}); addEventListener('pointerdown', this.onDown);
     document.fonts && document.fonts.load && document.fonts.load('12px "Space Mono"').then(()=>{ this.code = null; }, ()=>{});
@@ -1124,7 +1124,8 @@ class Component extends DCLogic {
     ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.drawImage(this.cbase,0,0); ctx.setTransform(d,0,0,d,0,0);
     ctx.font = '12px "Space Mono", monospace';
     const mx = this.mouse ? this.mouse.x : -9999, my = this.mouse ? this.mouse.y : -9999;
-    if (mx > -999 && !still){ [[210, 'ink', .2],[100, 'acc', .42]].forEach(([R, key, al])=>{ ctx.save(); ctx.beginPath(); ctx.arc(mx, my, R, 0, 7); ctx.clip(); ctx.fillStyle = 'rgba(' + col[key] + ',' + (al*A) + ')'; C.lines.forEach(l=>{ if (Math.abs(l.y - my) < R + 12 && l.x < mx + R && l.x + l.w > mx - R) ctx.fillText(l.t, l.x, l.y); }); ctx.restore(); }); }
+    this.spotK = (this.spotK ?? 1) + ((this.overText ? 0 : 1) - (this.spotK ?? 1)) * .12;  // spotlight fades over readable content
+    if (mx > -999 && !still && this.spotK > .02){ [[210, 'ink', .2*this.spotK],[100, 'acc', .42*this.spotK]].forEach(([R, key, al])=>{ ctx.save(); ctx.beginPath(); ctx.arc(mx, my, R, 0, 7); ctx.clip(); ctx.fillStyle = 'rgba(' + col[key] + ',' + (al*A) + ')'; C.lines.forEach(l=>{ if (Math.abs(l.y - my) < R + 12 && l.x < mx + R && l.x + l.w > mx - R) ctx.fillText(l.t, l.x, l.y); }); ctx.restore(); }); }
     const ease = t => t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2;
     C.bots.forEach(b=>{
       const B = b.busy;
@@ -1185,9 +1186,10 @@ class Component extends DCLogic {
     if (this.baseDirty) this.drawBase();
     ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,c.width,c.height); ctx.drawImage(this.base,0,0); ctx.setTransform(d,0,0,d,0,0);
     const mx = this.mouse.x, my = this.mouse.y, R = 170;
-    if (mx > -999){ ctx.lineWidth = 1;
-      this.edges.forEach(([i,j])=>{ const p=this.nodes[i], q=this.nodes[j]; const dm = Math.hypot((p.x+q.x)/2-mx,(p.y+q.y)/2-my); if (dm>R) return; ctx.strokeStyle = `rgba(${col.acc},${(1-dm/R)*.22*A})`; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke(); });
-      this.nodes.forEach(n=>{ const dm = Math.hypot(n.x-mx,n.y-my); if (dm>R) return; ctx.fillStyle = `rgba(${col.acc},${(1-dm/R)*.5*A})`; ctx.beginPath(); ctx.arc(n.x,n.y,n.r+.4,0,7); ctx.fill(); }); }
+    this.spotK = (this.spotK ?? 1) + ((this.overText ? 0 : 1) - (this.spotK ?? 1)) * .12; const K = this.spotK;
+    if (mx > -999 && K > .02){ ctx.lineWidth = 1;
+      this.edges.forEach(([i,j])=>{ const p=this.nodes[i], q=this.nodes[j]; const dm = Math.hypot((p.x+q.x)/2-mx,(p.y+q.y)/2-my); if (dm>R) return; ctx.strokeStyle = `rgba(${col.acc},${(1-dm/R)*.22*A*K})`; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke(); });
+      this.nodes.forEach(n=>{ const dm = Math.hypot(n.x-mx,n.y-my); if (dm>R) return; ctx.fillStyle = `rgba(${col.acc},${(1-dm/R)*.5*A*K})`; ctx.beginPath(); ctx.arc(n.x,n.y,n.r+.4,0,7); ctx.fill(); }); }
     this.nodes.forEach(n=>{ if (n.q < .02) return; ctx.fillStyle = `rgba(${col.acc},${n.q*.22*A})`; ctx.beginPath(); ctx.arc(n.x,n.y,n.r+5*n.q,0,7); ctx.fill(); if (!still) n.q *= .965; });
     if (still) return;
     const calm = this.motion()==='calm';
