@@ -13,6 +13,37 @@
 <title>Unnati Shah — AI Engineer</title>
 <meta name="description" content="Unnati Shah builds multi-agent orchestration, retrieval, and evaluation systems for production LLMs.">
 <script src="./image-slot.js"></script>
+<script>
+(() => {  // custom cursor: dot follows the mouse exactly, ring trails it and reacts to what's underneath
+  if (!matchMedia('(pointer: fine)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const start = () => {
+    const ring = document.createElement('div'), dot = document.createElement('div');
+    ring.className = 'cc-ring'; dot.className = 'cc-dot'; ring.setAttribute('aria-hidden', 'true'); dot.setAttribute('aria-hidden', 'true');
+    document.body.append(ring, dot); document.documentElement.classList.add('cc');
+    let x = -99, y = -99, rx = x, ry = y, s = 1, seen = false;
+    addEventListener('mousemove', e => {
+      x = e.clientX; y = e.clientY;
+      if (!seen) { seen = true; rx = x; ry = y; ring.style.opacity = dot.style.opacity = 1; }
+      const t = e.target.closest ? e.target : document.body;
+      document.documentElement.classList.toggle('cc-text', !!t.closest('input,textarea,[contenteditable],select'));
+      const label = t.closest('a[href^="#/work/"]') && t.closest('#sec-work') ? 'Read →' : t.closest('#sec-projects a[target="_blank"]') ? 'Open ↗' : '';
+      const hover = !label && (!!t.closest('a,button,[role=button],summary,label,[onclick]') || document.documentElement.dataset.cur === 'pointer');
+      if (ring.textContent !== label) ring.textContent = label;
+      ring.classList.toggle('label', !!label); ring.classList.toggle('hover', hover);
+    }, { passive: true });
+    addEventListener('mousedown', () => s = .8); addEventListener('mouseup', () => s = 1);
+    document.documentElement.addEventListener('mouseleave', () => { ring.style.opacity = dot.style.opacity = 0; seen = false; });
+    const loop = () => {
+      rx += (x - rx) * .2; ry += (y - ry) * .2;
+      dot.style.transform = `translate3d(${x}px,${y}px,0) translate(-50%,-50%)`;
+      ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%) scale(${s})`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+  };
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', start) : start();
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script>try{var t=localStorage.getItem('us-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme='dark'}</script>
@@ -28,6 +59,15 @@ button{font:inherit;color:inherit}
 ::selection{background:var(--acc);color:#070a0f}
 :focus-visible{outline:1px solid var(--acc-ink);outline-offset:3px}
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+/* custom cursor: dot + trailing ring; fine pointers only, off for reduced motion */
+html.cc,html.cc *{cursor:none!important}
+html.cc input,html.cc textarea,html.cc [contenteditable]{cursor:text!important}
+.cc-dot,.cc-ring{position:fixed;left:0;top:0;pointer-events:none;z-index:9999;border-radius:999px;opacity:0;will-change:transform}
+.cc-dot{width:6px;height:6px;background:var(--acc-ink);transition:opacity .2s,width .2s,height .2s}
+.cc-ring{display:grid;place-items:center;width:34px;height:34px;box-sizing:border-box;border:1.5px solid color-mix(in oklab,var(--acc-ink) 65%,transparent);background:color-mix(in oklab,var(--acc) 5%,transparent);font:500 10px 'Space Mono',monospace;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:var(--bg);transition:opacity .2s,width .35s cubic-bezier(.2,.8,.2,1),height .35s cubic-bezier(.2,.8,.2,1),padding .35s,background-color .25s,border-color .25s}
+.cc-ring.hover{width:54px;height:54px;background:color-mix(in oklab,var(--acc) 16%,transparent);border-color:var(--acc-ink)}
+.cc-ring.label{width:auto;height:30px;padding:0 13px;background:var(--acc-ink);border-color:var(--acc-ink)}
+html.cc-text .cc-dot,html.cc-text .cc-ring,.cc-ring.label+.cc-dot{opacity:0!important}
 [data-tok]{cursor:default}[data-tok]>span{padding:1px 0;border-radius:3px;transition:background-color .25s}[data-t='1']{background:color-mix(in oklab,var(--acc) 11%,transparent)}[data-t='0']{background:color-mix(in oklab,var(--acc2) 11%,transparent)}[data-tok]:hover>[data-t='1']{background:color-mix(in oklab,var(--acc) 26%,transparent)}[data-tok]:hover>[data-t='0']{background:color-mix(in oklab,var(--acc2) 26%,transparent)}[data-tok] i{font-style:normal;color:var(--faint);transition:color .25s}[data-tok]:hover i{color:var(--acc-ink)}@media (max-width:1100px){[data-toks]{grid-template-columns:repeat(2,max-content)!important;justify-content:start!important}}@media (max-width:640px){[data-toks]{display:flex!important;flex-wrap:wrap}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -483,7 +523,6 @@ button{font:inherit;color:inherit}
   <section data-d="1" aria-label="Architecture" style="margin-top:clamp(56px,9vh,96px);border:1px solid var(--line2);border-radius:14px;background:var(--card);padding:clamp(20px,3vw,36px);display:flex;flex-direction:column;gap:24px">
     <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase">
       <span style="color:var(--ink)">Architecture</span>
-      <span style="color:var(--faint)">{{ cur.diagHint }}</span>
     </div>
     <sc-if value="{{ cur.isHub }}" hint-placeholder-val="{{ false }}">
       <svg viewBox="0 0 640 300" role="img" aria-label="An orchestrator at the center passes tasks to intent routing, A2A agents, MCP tools, and workflow state." style="width:100%;max-height:380px;overflow:visible">
@@ -987,7 +1026,7 @@ class Component extends DCLogic {
     addEventListener('resize', this.onResize);
     this.onScroll = () => this.scrollFx();
     addEventListener('scroll', this.onScroll, {passive:true});
-    this.onMouse = e => { this.mouse = {x:e.clientX, y:e.clientY}; const C = this.code; if (C && (this.props.background ?? 'code') === 'code'){ const t = e.target; const plain = !(t.closest && t.closest('a,button,input,[role=dialog],[role=button],p,h1,h2,h3,li,dl,figure,article')); const near = plain && (C.bots.some(b=>Math.hypot(b.x - e.clientX, b.y - e.clientY) < 26) || C.lines.some(l=>e.clientX >= l.x && e.clientX <= l.x + l.w && e.clientY >= l.y - 14 && e.clientY <= l.y + 6)); const want = near ? 'pointer' : ''; if (this._cur !== want){ this._cur = want; document.documentElement.style.cursor = want; } } };
+    this.onMouse = e => { this.mouse = {x:e.clientX, y:e.clientY}; const C = this.code; if (C && (this.props.background ?? 'code') === 'code'){ const t = e.target; const plain = !(t.closest && t.closest('a,button,input,[role=dialog],[role=button],p,h1,h2,h3,li,dl,figure,article')); const near = plain && (C.bots.some(b=>Math.hypot(b.x - e.clientX, b.y - e.clientY) < 26) || C.lines.some(l=>e.clientX >= l.x && e.clientX <= l.x + l.w && e.clientY >= l.y - 14 && e.clientY <= l.y + 6)); const want = near ? 'pointer' : ''; if (this._cur !== want){ this._cur = want; document.documentElement.style.cursor = want; document.documentElement.dataset.cur = want; } } };
     this.onDown = e => { if (e.target.closest && e.target.closest('a,button,input,svg,[role=dialog]')) return; this.burst(e.clientX, e.clientY); };
     addEventListener('mousemove', this.onMouse, {passive:true}); addEventListener('pointerdown', this.onDown);
     document.fonts && document.fonts.load && document.fonts.load('12px "Space Mono"').then(()=>{ this.code = null; }, ()=>{});
@@ -1367,7 +1406,6 @@ class Component extends DCLogic {
       const st = Math.min(s.stage, p.stages.length-1);
       cur = {...p, isHub:p.kind==='hub', isPipe:p.kind==='pipe', stackList:p.stack, lineRight:`calc(${100/p.stages.length}% + 6px)`,
         decisions:p.decisions.map((t,i)=>({n:String(i+1).padStart(2,'0'),t})),
-        diagHint:'Drawn from résumé descriptions · verify against implementation',
         stageNum: `${String(st+1).padStart(2,'0')} / ${String(p.stages.length).padStart(2,'0')}`, stageNote:p.stages[st].note,
         stepCount:p.contribution.length+(p.contribution.length>1?' steps':' step'), contribution:p.contribution.map((t,i)=>({n:String(i+1).padStart(2,'0'), t})),
         stages:p.stages.map((x,i)=>({...x, on:i===st?'true':'false', pick:()=>this.setState({stage:i}),
